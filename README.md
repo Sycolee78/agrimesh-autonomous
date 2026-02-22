@@ -110,6 +110,10 @@ agrimesh-autonomous/
   - season mode
   - daily water budget
   - weather baseline + variability
+- Added requested features:
+  - per-plot cards + map/scatter view
+  - manual approvals for `HUMAN_APPROVAL` actions
+  - scenario save/load via JSON presets
 - Displays:
   - KPI trends (yield proxy, WUE)
   - resource/condition curves (water, tank level, rain, temperature)
