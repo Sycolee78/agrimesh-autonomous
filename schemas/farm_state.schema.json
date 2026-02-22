@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agrimesh.local/schemas/farm_state.schema.json",
+  "title": "FarmState",
+  "type": "object",
+  "required": [
+    "timestamp",
+    "location",
+    "weather",
+    "soil",
+    "crop",
+    "resources",
+    "constraints",
+    "history"
+  ],
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "location": {
+      "type": "object",
+      "required": ["country", "region"],
+      "properties": {
+        "country": { "type": "string" },
+        "region": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" }
+      }
+    },
+    "weather": {
+      "type": "object",
+      "required": ["temp_c", "rain_mm", "forecast_rain_12h_mm"],
+      "properties": {
+        "temp_c": { "type": "number" },
+        "rain_mm": { "type": "number", "minimum": 0 },
+        "humidity_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "forecast_rain_12h_mm": { "type": "number", "minimum": 0 },
+        "forecast_rain_24h_mm": { "type": "number", "minimum": 0 }
+      }
+    },
+    "soil": {
+      "type": "object",
+      "required": ["moisture_pct", "field_capacity_pct", "wilting_point_pct"],
+      "properties": {
+        "moisture_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "field_capacity_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "wilting_point_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "ec_dsm": { "type": "number" },
+        "ph": { "type": "number" }
+      }
+    },
+    "crop": {
+      "type": "object",
+      "required": ["type", "stage", "days_after_planting"],
+      "properties": {
+        "type": { "type": "string" },
+        "stage": {
+          "type": "string",
+          "enum": ["seedling", "vegetative", "flowering", "grain_fill", "maturity"]
+        },
+        "days_after_planting": { "type": "integer", "minimum": 0 },
+        "stress_index": { "type": "number", "minimum": 0 }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "required": ["water_available_m3"],
+      "properties": {
+        "water_available_m3": { "type": "number", "minimum": 0 },
+        "energy_kwh": { "type": "number", "minimum": 0 },
+        "fertilizer_kg": { "type": "number", "minimum": 0 }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["max_irrigation_mm_day", "pump_capacity_m3h"],
+      "properties": {
+        "max_irrigation_mm_day": { "type": "number", "minimum": 0 },
+        "pump_capacity_m3h": { "type": "number", "minimum": 0 },
+        "water_budget_week_m3": { "type": "number", "minimum": 0 }
+      }
+    },
+    "history": {
+      "type": "object",
+      "properties": {
+        "irrigation_mm_last_7d": {
+          "type": "array",
+          "items": { "type": "number", "minimum": 0 },
+          "maxItems": 7
+        },
+        "rain_mm_last_7d": {
+          "type": "array",
+          "items": { "type": "number", "minimum": 0 },
+          "maxItems": 7
+        },
+        "yield_proxy_last": { "type": "number" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

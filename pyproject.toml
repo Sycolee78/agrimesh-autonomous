@@ -1,0 +1,14 @@
+[project]
+name = "agrimesh-autonomous"
+version = "0.1.0"
+description = "Simulation-first agent-driven farm OS"
+requires-python = ">=3.11"
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
