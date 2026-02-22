@@ -7,6 +7,7 @@ from src.agents.irrigation.policies import RuleBasedIrrigationPolicy
 from src.agents.yield_forecast import YieldForecastAgentV0
 from src.orchestration.aez_policy import resolve_irrigation_config
 from src.orchestration.contracts import AgentContext, AgentOutput, ActionProposal, Priority, RiskLevel
+from src.orchestration.yield_targets import get_yield_band, midpoint_target
 
 
 class BaseOpsAgent:
@@ -54,8 +55,40 @@ class CropOperationsAgent(BaseOpsAgent):
         forecast = self.yield_model.predict(ctx.farm_state)
         out.observations["yield_forecast"] = self.yield_model.to_log_dict(forecast)
 
+        # AEZ-aware yield expectation context
+        plot_expectations = {}
+        expected_midpoints = []
+        for plot in ctx.farm_state.plots:
+            band = get_yield_band(plot.crop_type, plot.aez_zone)
+            mid = midpoint_target(plot.crop_type, plot.aez_zone)
+            expected_midpoints.append(mid)
+            plot_expectations[plot.plot_id] = {
+                "crop": plot.crop_type,
+                "aez_zone": plot.aez_zone,
+                "target_low_tpha": band.low_tpha,
+                "target_high_tpha": band.high_tpha,
+                "target_mid_tpha": mid,
+            }
+
+        expected_farm_mid = round(sum(expected_midpoints) / max(1, len(expected_midpoints)), 3)
+        observed_proxy = float(forecast.yield_proxy_estimate_tpha)
+        yield_gap = round(observed_proxy - expected_farm_mid, 3)
+
+        out.observations["yield_expectations_by_plot"] = plot_expectations
+        out.observations["yield_alignment"] = {
+            "expected_farm_mid_tpha": expected_farm_mid,
+            "observed_yield_proxy_tpha": observed_proxy,
+            "yield_gap_tpha": yield_gap,
+            "status": "on_track" if yield_gap >= 0 else "below_target",
+        }
+
         if forecast.recommendation_tag == "increase_irrigation":
             out.alerts.append("Yield model indicates elevated stress risk; irrigation should be prioritized.")
+
+        if yield_gap < -0.5:
+            out.alerts.append(
+                f"Yield proxy is {abs(yield_gap):.2f} t/ha below AEZ-weighted midpoint target; trigger agronomy review."
+            )
 
         return out
 

@@ -84,6 +84,12 @@ agrimesh-autonomous/
   - seasonal mode (`wet_season` / `dry_season`)
 - Implementation: `src/orchestration/aez_policy.py`
 
+### AEZ-aware yield targeting (new)
+- Added crop+zone yield bands and midpoint targets.
+- Crop agent now logs per-plot expected yield ranges and farm-level yield-gap status.
+- If yield gap is materially negative, orchestrator alerts for agronomy review.
+- Implementation: `src/orchestration/yield_targets.py`
+
 ## Crop portfolio in current model scope
 - Maize (staple)
 - Potatoes (high-value, irrigation-sensitive)
