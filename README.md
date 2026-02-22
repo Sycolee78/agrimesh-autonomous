@@ -49,7 +49,8 @@ agrimesh-autonomous/
 2. Install deps: `pip install -r requirements.txt`
 3. Run simulation smoke: `python -m src.sim.runner`
 4. Run benchmark (baseline vs agent): `python -m src.sim.benchmark`
-5. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`)
+5. Tune irrigation parameters (grid search): `python -m src.sim.tuning`
+6. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`, `tuning/tuning_summary.json`)
 
 ## Success Metrics (Phase 1)
 - Water-use efficiency improvement (%)

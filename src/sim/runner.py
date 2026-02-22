@@ -32,14 +32,19 @@ def initial_state() -> FarmState:
     )
 
 
-def run(days: int = 14, policy: Literal["baseline", "agent"] = "agent", out_file: str = "logs/sim_run.jsonl") -> None:
+def run(
+    days: int = 14,
+    policy: Literal["baseline", "agent"] = "agent",
+    out_file: str = "logs/sim_run.jsonl",
+    agent_config: dict | None = None,
+) -> None:
     state = initial_state()
     sim = FarmSimulator()
 
     if policy == "baseline":
         actor = BaselineFixedSchedulePolicy(liters_per_plot=120)
     else:
-        actor = RuleBasedIrrigationPolicy()
+        actor = RuleBasedIrrigationPolicy(**(agent_config or {}))
 
     out_path = Path(out_file)
     out_path.parent.mkdir(parents=True, exist_ok=True)

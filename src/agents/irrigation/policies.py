@@ -23,17 +23,19 @@ class BaselineFixedSchedulePolicy:
 class RuleBasedIrrigationPolicy:
     """Irrigation policy using soil moisture, rain, and tank constraints."""
 
-    policy_version = "irrigation-rule-v1"
+    policy_version = "irrigation-rule-v2"
 
     def __init__(
         self,
-        target_moisture: float = 0.62,
-        stress_threshold: float = 0.38,
-        liters_per_moisture_point: float = 300.0,
+        target_moisture: float = 0.68,
+        stress_threshold: float = 0.40,
+        liters_per_moisture_point: float = 380.0,
+        min_daily_liters_per_plot: float = 45.0,
     ):
         self.target_moisture = target_moisture
         self.stress_threshold = stress_threshold
         self.liters_per_moisture_point = liters_per_moisture_point
+        self.min_daily_liters_per_plot = min_daily_liters_per_plot
 
     def decide(self, state: FarmState, cycle_id: str) -> Tuple[ActionPlan, str]:
         planned: Dict[str, float] = {}
@@ -43,6 +45,11 @@ class RuleBasedIrrigationPolicy:
         for plot in state.plots:
             deficit = max(0.0, self.target_moisture - plot.soil_moisture)
             liters = deficit * self.liters_per_moisture_point * rain_factor
+
+            # If plot is below stress threshold, enforce a recovery floor.
+            if plot.soil_moisture < self.stress_threshold:
+                liters = max(liters, self.min_daily_liters_per_plot)
+
             planned[plot.plot_id] = round(max(0.0, liters), 2)
 
         total_planned = sum(planned.values())
@@ -55,7 +62,8 @@ class RuleBasedIrrigationPolicy:
         stress_plots = [p.plot_id for p in state.plots if p.soil_moisture < self.stress_threshold]
         rationale = (
             f"Rule-based irrigation using deficits to target {self.target_moisture:.2f}; "
-            f"rain_factor={rain_factor:.2f}; stress_plots={stress_plots}"
+            f"rain_factor={rain_factor:.2f}; min_floor={self.min_daily_liters_per_plot:.1f}; "
+            f"stress_plots={stress_plots}"
         )
 
         return ActionPlan(agent_id="irrigation_agent", cycle_id=cycle_id, irrigation_by_plot_liters=planned), rationale

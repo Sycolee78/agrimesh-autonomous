@@ -36,7 +36,7 @@ def _summarize(rows: List[Dict]) -> Dict[str, float]:
     }
 
 
-def run_benchmark(days: int = 30, out_dir: str = "logs") -> Dict[str, object]:
+def run_benchmark(days: int = 30, out_dir: str = "logs", agent_config: dict | None = None) -> Dict[str, object]:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
@@ -44,7 +44,7 @@ def run_benchmark(days: int = 30, out_dir: str = "logs") -> Dict[str, object]:
     agent_file = out / "agent.jsonl"
 
     run(days=days, policy="baseline", out_file=str(baseline_file))
-    run(days=days, policy="agent", out_file=str(agent_file))
+    run(days=days, policy="agent", out_file=str(agent_file), agent_config=agent_config)
 
     baseline_rows = _load_jsonl(baseline_file)
     agent_rows = _load_jsonl(agent_file)
@@ -70,6 +70,7 @@ def run_benchmark(days: int = 30, out_dir: str = "logs") -> Dict[str, object]:
     }
 
     result = {
+        "agent_config": agent_config or {},
         "baseline": baseline_summary,
         "agent": agent_summary,
         "comparison": comparison,
