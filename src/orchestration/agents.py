@@ -5,6 +5,7 @@ from typing import List
 
 from src.agents.irrigation.policies import RuleBasedIrrigationPolicy
 from src.agents.yield_forecast import YieldForecastAgentV0
+from src.orchestration.aez_policy import resolve_irrigation_config
 from src.orchestration.contracts import AgentContext, AgentOutput, ActionProposal, Priority, RiskLevel
 
 
@@ -25,7 +26,19 @@ class CropOperationsAgent(BaseOpsAgent):
 
     def run(self, ctx: AgentContext) -> AgentOutput:
         out = AgentOutput(agent_id=self.agent_id)
-        plan, rationale = self.irrigation.decide(ctx.farm_state, ctx.cycle_id)
+
+        per_plot_overrides = {}
+        for plot in ctx.farm_state.plots:
+            cfg = resolve_irrigation_config(plot.aez_zone, plot.crop_type, ctx.mode)
+            per_plot_overrides[plot.plot_id] = {
+                "target_moisture": cfg.target_moisture,
+                "stress_threshold": cfg.stress_threshold,
+                "liters_per_moisture_point": cfg.liters_per_moisture_point,
+                "min_daily_liters_per_plot": cfg.min_daily_liters_per_plot,
+            }
+
+        plan, rationale = self.irrigation.decide(ctx.farm_state, ctx.cycle_id, per_plot_overrides=per_plot_overrides)
+        out.observations["irrigation_config_by_plot"] = per_plot_overrides
 
         for plot_id, liters in plan.irrigation_by_plot_liters.items():
             out.proposals.append(

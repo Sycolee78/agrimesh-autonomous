@@ -37,18 +37,24 @@ class RuleBasedIrrigationPolicy:
         self.liters_per_moisture_point = liters_per_moisture_point
         self.min_daily_liters_per_plot = min_daily_liters_per_plot
 
-    def decide(self, state: FarmState, cycle_id: str) -> Tuple[ActionPlan, str]:
+    def decide(self, state: FarmState, cycle_id: str, per_plot_overrides: Dict[str, Dict[str, float]] | None = None) -> Tuple[ActionPlan, str]:
         planned: Dict[str, float] = {}
 
         rain_factor = max(0.0, 1.0 - (state.weather.rainfall_mm / 20.0))  # heavy rain -> less irrigation
 
         for plot in state.plots:
-            deficit = max(0.0, self.target_moisture - plot.soil_moisture)
-            liters = deficit * self.liters_per_moisture_point * rain_factor
+            cfg = (per_plot_overrides or {}).get(plot.plot_id, {})
+            target_moisture = float(cfg.get("target_moisture", self.target_moisture))
+            stress_threshold = float(cfg.get("stress_threshold", self.stress_threshold))
+            liters_per_point = float(cfg.get("liters_per_moisture_point", self.liters_per_moisture_point))
+            min_floor = float(cfg.get("min_daily_liters_per_plot", self.min_daily_liters_per_plot))
+
+            deficit = max(0.0, target_moisture - plot.soil_moisture)
+            liters = deficit * liters_per_point * rain_factor
 
             # If plot is below stress threshold, enforce a recovery floor.
-            if plot.soil_moisture < self.stress_threshold:
-                liters = max(liters, self.min_daily_liters_per_plot)
+            if plot.soil_moisture < stress_threshold:
+                liters = max(liters, min_floor)
 
             planned[plot.plot_id] = round(max(0.0, liters), 2)
 
@@ -61,8 +67,8 @@ class RuleBasedIrrigationPolicy:
 
         stress_plots = [p.plot_id for p in state.plots if p.soil_moisture < self.stress_threshold]
         rationale = (
-            f"Rule-based irrigation using deficits to target {self.target_moisture:.2f}; "
-            f"rain_factor={rain_factor:.2f}; min_floor={self.min_daily_liters_per_plot:.1f}; "
+            f"Rule-based irrigation with optional AEZ/crop overrides; default_target={self.target_moisture:.2f}; "
+            f"rain_factor={rain_factor:.2f}; default_min_floor={self.min_daily_liters_per_plot:.1f}; "
             f"stress_plots={stress_plots}"
         )
 

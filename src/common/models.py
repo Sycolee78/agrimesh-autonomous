@@ -13,6 +13,7 @@ class PlotState:
     crop_stage: str
     soil_moisture: float  # 0-1
     soil_type: str = "loam"
+    aez_zone: str = "III"
     last_irrigation_at: Optional[datetime] = None
 
 

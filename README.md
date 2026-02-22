@@ -76,6 +76,14 @@ agrimesh-autonomous/
 - Livestock water actions are auto-prioritized as `CRITICAL`.
 - Irrigation actions are conflict-resolved against daily water budgets.
 
+### AEZ-aware irrigation policy (new)
+- Plot model now includes `aez_zone` (I–V style zone tag).
+- Orchestrator resolves per-plot irrigation config from:
+  - AEZ baseline
+  - crop sensitivity (maize/potato/sorghum/groundnut)
+  - seasonal mode (`wet_season` / `dry_season`)
+- Implementation: `src/orchestration/aez_policy.py`
+
 ## Crop portfolio in current model scope
 - Maize (staple)
 - Potatoes (high-value, irrigation-sensitive)
