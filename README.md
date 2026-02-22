@@ -5,6 +5,15 @@ Agent-driven Farm OS for Zimbabwe (simulation-first MVP).
 ## Vision
 Build a distributed agricultural intelligence platform where software agents make daily farm decisions, learn from outcomes, and improve productivity/resilience over time.
 
+## Zimbabwe mixed-farm operating context (now encoded)
+This project now explicitly follows an integrated crop-livestock operating model for Zimbabwe:
+- Mixed-loop sustainability: crop residues and by-products feed livestock; manure/compost returns nutrients to fields.
+- AEZ-aware planning: farm decisions must be region- and rainfall-context aware (not one static recipe).
+- Dual operating cadence:
+  - Daily loops: livestock water/feed/health, irrigation checks, maintenance, security/biosecurity.
+  - Seasonal modes: wet-season vs dry-season priorities and constraints.
+- Welfare + biosecurity + water-security are hard constraints, not optional optimizations.
+
 ## Phase 1 Goal (Simulation MVP)
 Within 6 months, deliver:
 - Simulated farm environment
@@ -50,13 +59,35 @@ agrimesh-autonomous/
 3. Run simulation smoke: `python -m src.sim.runner`
 4. Run benchmark (baseline vs agent): `python -m src.sim.benchmark`
 5. Tune irrigation parameters (grid search): `python -m src.sim.tuning`
-6. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`, `tuning/tuning_summary.json`)
+6. Run orchestrator cycle demo: `python -m src.orchestration.run_orchestrator_demo`
+7. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`, `tuning/tuning_summary.json`, `orchestrator_cycle.json`)
+
+## Orchestration layer (new)
+`src/orchestration/` now contains a management-orchestrator pattern with specialized agents:
+- `FarmManagementOrchestrator` (conflict resolution + guardrails)
+- `CropOperationsAgent`
+- `LivestockOperationsAgent`
+- `WeatherWaterAgent`
+- `MaintenanceAgent`
+- `SecurityBiosecurityAgent`
+
+### Guardrails currently enforced
+- High-risk actions (`spray_pesticide`, `animal_treatment`, `cull`, `drone_herd_offboard`) are auto-marked `HUMAN_APPROVAL`.
+- Livestock water actions are auto-prioritized as `CRITICAL`.
+- Irrigation actions are conflict-resolved against daily water budgets.
+
+## Crop portfolio in current model scope
+- Maize (staple)
+- Potatoes (high-value, irrigation-sensitive)
+- Sorghum (drought resilience)
+- Groundnuts (legume + feed/compost loop)
 
 ## Success Metrics (Phase 1)
 - Water-use efficiency improvement (%)
 - Yield proxy improvement (%)
 - Decision consistency and explainability
 - Failure-rate under weather variability
+- Welfare/biosecurity incident response latency
 
 ## Positioning (go-to-market)
 Start with: **Smart irrigation + yield optimization**
