@@ -44,12 +44,12 @@ agrimesh-autonomous/
   tests/
 ```
 
-## Quick Start (next step)
+## Quick Start
 1. Create a Python virtual environment
-2. Implement `farm_os/env/simulator.py`
-3. Implement irrigation baseline policy
-4. Implement Irrigation Agent v0 (rule-based)
-5. Run 30 simulated days and compare baseline vs agent
+2. Install deps: `pip install -r requirements.txt`
+3. Run simulation smoke: `python -m src.sim.runner`
+4. Run benchmark (baseline vs agent): `python -m src.sim.benchmark`
+5. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`)
 
 ## Success Metrics (Phase 1)
 - Water-use efficiency improvement (%)
