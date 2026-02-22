@@ -60,7 +60,8 @@ agrimesh-autonomous/
 4. Run benchmark (baseline vs agent): `python -m src.sim.benchmark`
 5. Tune irrigation parameters (grid search): `python -m src.sim.tuning`
 6. Run orchestrator cycle demo: `python -m src.orchestration.run_orchestrator_demo`
-7. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`, `tuning/tuning_summary.json`, `orchestrator_cycle.json`)
+7. Launch simulation frontend: `streamlit run frontend/app.py`
+8. Check outputs in `logs/` (`baseline.jsonl`, `agent.jsonl`, `benchmark_report.json`, `tuning/tuning_summary.json`, `orchestrator_cycle.json`)
 
 ## Orchestration layer (new)
 `src/orchestration/` now contains a management-orchestrator pattern with specialized agents:
@@ -102,6 +103,18 @@ agrimesh-autonomous/
 - Decision consistency and explainability
 - Failure-rate under weather variability
 - Welfare/biosecurity incident response latency
+
+## Frontend Simulation UI (new)
+- Built with Streamlit (`frontend/app.py`)
+- Lets you simulate multi-day operations with controls for:
+  - season mode
+  - daily water budget
+  - weather baseline + variability
+- Displays:
+  - KPI trends (yield proxy, WUE)
+  - resource/condition curves (water, tank level, rain, temperature)
+  - latest orchestrator action queue
+  - generated alerts
 
 ## Positioning (go-to-market)
 Start with: **Smart irrigation + yield optimization**
