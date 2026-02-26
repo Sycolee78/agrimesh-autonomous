@@ -54,10 +54,41 @@ agrimesh-autonomous/
 ```
 
 ## Quick Start
-1. Create a Python virtual environment
-2. Install deps: `pip install -r requirements.txt`
-3. Run simulation smoke: `python -m src.sim.runner`
-4. Run benchmark (baseline vs agent): `python -m src.sim.benchmark`
+
+### Option A: One-command run (recommended)
+```bash
+# macOS/Linux
+./run.sh
+
+# Windows
+run.bat
+```
+This creates a virtual environment, installs deps, and starts the frontend at http://localhost:8501
+
+### Option B: Manual setup
+```bash
+# 1. Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Set PYTHONPATH (required for imports)
+export PYTHONPATH="$(pwd):$PYTHONPATH"  # Windows: set PYTHONPATH=%cd%;%PYTHONPATH%
+
+# 4. Run frontend
+streamlit run frontend/app.py
+
+# Or run simulation directly
+python -m src.sim.runner
+python -m src.sim.benchmark
+```
+
+### Troubleshooting
+- **Map not rendering?** Make sure `vl-convert-python` is installed (included in requirements.txt)
+- **Import errors?** Ensure PYTHONPATH includes the project root
+- **Port in use?** Run with `streamlit run frontend/app.py --server.port 8502`
 5. Tune irrigation parameters (grid search): `python -m src.sim.tuning`
 6. Run orchestrator cycle demo: `python -m src.orchestration.run_orchestrator_demo`
 7. Launch simulation frontend: `streamlit run frontend/app.py`

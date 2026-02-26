@@ -135,6 +135,29 @@ def maybe_inject_demo_human_approval(orch: Dict[str, Any]) -> Dict[str, Any]:
 st.title("🌾 AgriMesh Autonomous — Simulation Frontend")
 st.caption("Per-plot simulation, AEZ-aware orchestration, approval workflow, and scenario presets.")
 
+
+def render_initial_map(scenario: Dict[str, Any]) -> None:
+    """Render plot map before simulation runs."""
+    plots = scenario.get("farm", {}).get("plots", [])
+    if not plots:
+        return
+    map_df = pd.DataFrame(plots)
+    if "lat" not in map_df.columns or "lon" not in map_df.columns:
+        st.warning("Plot coordinates (lat/lon) missing — map cannot render.")
+        return
+    scatter = (
+        alt.Chart(map_df)
+        .mark_circle(size=220)
+        .encode(
+            x=alt.X("lon:Q", title="Longitude"),
+            y=alt.Y("lat:Q", title="Latitude"),
+            color=alt.Color("soil_moisture:Q", title="Initial moisture", scale=alt.Scale(scheme="bluegreen")),
+            tooltip=["plot_id", "crop_type", "aez_zone", "soil_moisture", "area_m2"],
+        )
+        .properties(height=320)
+    )
+    st.altair_chart(scatter, use_container_width=True)
+
 loaded_scenario = default_scenario()
 with st.sidebar:
     st.header("Scenario")
@@ -311,3 +334,5 @@ if run:
         st.dataframe(df, use_container_width=True)
 else:
     st.info("Set parameters in the sidebar, then click **Run Simulation**.")
+    st.subheader("🗺️ Initial Plot Map")
+    render_initial_map(scenario_payload)
