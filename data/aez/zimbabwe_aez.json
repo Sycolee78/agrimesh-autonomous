@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "source": "Zimbabwe Agro-Ecological Zones (Government of Zimbabwe / FAO)",
+    "version": "2024.1",
+    "crs": "EPSG:4326",
+    "notes": "Simplified boundaries for MVP. Production should use official shapefiles."
+  },
+  "zones": {
+    "I": {
+      "name": "Specialized and Diversified Farming",
+      "rainfall_mm": {"min": 1000, "max": 1500, "mean": 1050},
+      "rainfall_reliability": 0.9,
+      "growing_season_days": {"min": 180, "max": 240},
+      "area_km2": 7000,
+      "percent_country": 1.8,
+      "description": "Eastern Highlands. High rainfall, cool temperatures. Suitable for tea, coffee, deciduous fruits, intensive livestock.",
+      "soil_types": ["ferralsols", "nitisols"],
+      "elevation_m": {"min": 1200, "max": 2500},
+      "provinces": ["Manicaland"],
+      "representative_coords": [{"lat": -18.97, "lon": 32.65}, {"lat": -19.5, "lon": 32.7}],
+      "bbox": {"minLat": -20.5, "maxLat": -18.0, "minLon": 32.3, "maxLon": 33.0}
+    },
+    "II": {
+      "name": "Intensive Farming",
+      "rainfall_mm": {"min": 750, "max": 1000, "mean": 850},
+      "rainfall_reliability": 0.85,
+      "growing_season_days": {"min": 150, "max": 180},
+      "area_km2": 58600,
+      "percent_country": 15,
+      "description": "Parts of Mashonaland. Good rainfall for maize, tobacco, cotton, wheat under irrigation.",
+      "soil_types": ["luvisols", "ferralsols", "vertisols"],
+      "elevation_m": {"min": 900, "max": 1500},
+      "provinces": ["Mashonaland East", "Mashonaland West", "Mashonaland Central", "Manicaland"],
+      "representative_coords": [{"lat": -17.83, "lon": 31.05}, {"lat": -18.5, "lon": 30.5}],
+      "bbox": {"minLat": -19.5, "maxLat": -16.5, "minLon": 29.5, "maxLon": 32.5}
+    },
+    "III": {
+      "name": "Semi-Intensive Farming",
+      "rainfall_mm": {"min": 650, "max": 800, "mean": 700},
+      "rainfall_reliability": 0.7,
+      "growing_season_days": {"min": 120, "max": 150},
+      "area_km2": 72900,
+      "percent_country": 18.7,
+      "description": "Midlands and parts of Manicaland. Marginal for maize; better for drought-tolerant crops, livestock.",
+      "soil_types": ["luvisols", "lixisols", "cambisols"],
+      "elevation_m": {"min": 600, "max": 1200},
+      "provinces": ["Midlands", "Masvingo", "Manicaland"],
+      "representative_coords": [{"lat": -19.5, "lon": 29.8}, {"lat": -20.0, "lon": 30.5}],
+      "bbox": {"minLat": -21.0, "maxLat": -18.5, "minLon": 28.5, "maxLon": 31.5}
+    },
+    "IV": {
+      "name": "Semi-Extensive Farming",
+      "rainfall_mm": {"min": 450, "max": 650, "mean": 550},
+      "rainfall_reliability": 0.55,
+      "growing_season_days": {"min": 90, "max": 120},
+      "area_km2": 147800,
+      "percent_country": 37.8,
+      "description": "Large parts of Matabeleland, southern Masvingo. Livestock ranching, drought-tolerant crops.",
+      "soil_types": ["lixisols", "arenosols", "luvisols"],
+      "elevation_m": {"min": 400, "max": 1000},
+      "provinces": ["Matabeleland North", "Matabeleland South", "Masvingo", "Midlands"],
+      "representative_coords": [{"lat": -20.15, "lon": 28.58}, {"lat": -21.0, "lon": 29.0}],
+      "bbox": {"minLat": -22.5, "maxLat": -19.0, "minLon": 25.5, "maxLon": 30.0}
+    },
+    "V": {
+      "name": "Extensive Farming",
+      "rainfall_mm": {"min": 300, "max": 500, "mean": 400},
+      "rainfall_reliability": 0.4,
+      "growing_season_days": {"min": 60, "max": 90},
+      "area_km2": 104400,
+      "percent_country": 26.7,
+      "description": "Low-lying areas: Zambezi Valley, Save-Limpopo. Extensive cattle/game ranching only.",
+      "soil_types": ["arenosols", "lixisols", "vertisols"],
+      "elevation_m": {"min": 200, "max": 600},
+      "provinces": ["Matabeleland South", "Masvingo", "Mashonaland Central"],
+      "representative_coords": [{"lat": -21.5, "lon": 29.5}, {"lat": -16.5, "lon": 29.0}],
+      "bbox": {"minLat": -22.5, "maxLat": -15.5, "minLon": 25.0, "maxLon": 32.0}
+    }
+  },
+  "crop_suitability": {
+    "maize": {
+      "I": {"yield_t_ha": {"min": 6, "max": 10, "expected": 8}, "risk": "low", "recommendation": "highly_suitable"},
+      "II": {"yield_t_ha": {"min": 4, "max": 7, "expected": 5.5}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 2, "max": 4, "expected": 3}, "risk": "medium", "recommendation": "suitable_with_management"},
+      "IV": {"yield_t_ha": {"min": 0.5, "max": 2, "expected": 1.2}, "risk": "high", "recommendation": "marginal"},
+      "V": {"yield_t_ha": {"min": 0, "max": 0.8, "expected": 0.4}, "risk": "very_high", "recommendation": "not_recommended"}
+    },
+    "sorghum": {
+      "I": {"yield_t_ha": {"min": 3, "max": 5, "expected": 4}, "risk": "low", "recommendation": "suitable"},
+      "II": {"yield_t_ha": {"min": 2.5, "max": 4.5, "expected": 3.5}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 2, "max": 3.5, "expected": 2.8}, "risk": "low", "recommendation": "highly_suitable"},
+      "IV": {"yield_t_ha": {"min": 1.5, "max": 3, "expected": 2.2}, "risk": "medium", "recommendation": "highly_suitable"},
+      "V": {"yield_t_ha": {"min": 0.8, "max": 2, "expected": 1.3}, "risk": "medium", "recommendation": "suitable"}
+    },
+    "groundnuts": {
+      "I": {"yield_t_ha": {"min": 2, "max": 3.5, "expected": 2.8}, "risk": "low", "recommendation": "highly_suitable"},
+      "II": {"yield_t_ha": {"min": 1.5, "max": 3, "expected": 2.2}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 1, "max": 2, "expected": 1.5}, "risk": "medium", "recommendation": "suitable"},
+      "IV": {"yield_t_ha": {"min": 0.5, "max": 1.2, "expected": 0.8}, "risk": "high", "recommendation": "marginal"},
+      "V": {"yield_t_ha": {"min": 0, "max": 0.5, "expected": 0.3}, "risk": "very_high", "recommendation": "not_recommended"}
+    },
+    "sunflower": {
+      "I": {"yield_t_ha": {"min": 1.5, "max": 2.5, "expected": 2}, "risk": "low", "recommendation": "suitable"},
+      "II": {"yield_t_ha": {"min": 1.2, "max": 2.2, "expected": 1.7}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 1, "max": 1.8, "expected": 1.4}, "risk": "medium", "recommendation": "highly_suitable"},
+      "IV": {"yield_t_ha": {"min": 0.6, "max": 1.2, "expected": 0.9}, "risk": "medium", "recommendation": "suitable"},
+      "V": {"yield_t_ha": {"min": 0.3, "max": 0.8, "expected": 0.5}, "risk": "high", "recommendation": "marginal"}
+    },
+    "cotton": {
+      "I": {"yield_t_ha": {"min": 1.5, "max": 2.5, "expected": 2}, "risk": "low", "recommendation": "suitable"},
+      "II": {"yield_t_ha": {"min": 1.2, "max": 2, "expected": 1.6}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 0.8, "max": 1.5, "expected": 1.1}, "risk": "medium", "recommendation": "suitable"},
+      "IV": {"yield_t_ha": {"min": 0.4, "max": 1, "expected": 0.7}, "risk": "high", "recommendation": "marginal"},
+      "V": {"yield_t_ha": {"min": 0, "max": 0.5, "expected": 0.3}, "risk": "very_high", "recommendation": "not_recommended"}
+    },
+    "tobacco": {
+      "I": {"yield_t_ha": {"min": 2, "max": 3.5, "expected": 2.8}, "risk": "low", "recommendation": "highly_suitable"},
+      "II": {"yield_t_ha": {"min": 1.8, "max": 3, "expected": 2.4}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 1, "max": 2, "expected": 1.5}, "risk": "medium", "recommendation": "suitable_with_irrigation"},
+      "IV": {"yield_t_ha": {"min": 0, "max": 1, "expected": 0.5}, "risk": "high", "recommendation": "not_recommended"},
+      "V": {"yield_t_ha": {"min": 0, "max": 0, "expected": 0}, "risk": "very_high", "recommendation": "not_recommended"}
+    },
+    "vegetables": {
+      "I": {"yield_t_ha": {"min": 15, "max": 30, "expected": 22}, "risk": "low", "recommendation": "highly_suitable"},
+      "II": {"yield_t_ha": {"min": 12, "max": 25, "expected": 18}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 8, "max": 18, "expected": 12}, "risk": "medium", "recommendation": "suitable_with_irrigation"},
+      "IV": {"yield_t_ha": {"min": 5, "max": 12, "expected": 8}, "risk": "high", "recommendation": "irrigation_required"},
+      "V": {"yield_t_ha": {"min": 3, "max": 8, "expected": 5}, "risk": "high", "recommendation": "irrigation_required"}
+    },
+    "fodder": {
+      "I": {"yield_t_ha": {"min": 20, "max": 40, "expected": 30}, "risk": "low", "recommendation": "highly_suitable"},
+      "II": {"yield_t_ha": {"min": 15, "max": 30, "expected": 22}, "risk": "low", "recommendation": "highly_suitable"},
+      "III": {"yield_t_ha": {"min": 10, "max": 20, "expected": 15}, "risk": "medium", "recommendation": "suitable"},
+      "IV": {"yield_t_ha": {"min": 5, "max": 12, "expected": 8}, "risk": "medium", "recommendation": "suitable"},
+      "V": {"yield_t_ha": {"min": 2, "max": 6, "expected": 4}, "risk": "high", "recommendation": "marginal"}
+    }
+  },
+  "livestock_carrying_capacity": {
+    "cattle": {
+      "I": {"lsu_per_ha": 1.2, "recommended_system": "intensive_dairy", "notes": "High rainfall supports intensive systems"},
+      "II": {"lsu_per_ha": 0.8, "recommended_system": "semi_intensive", "notes": "Good for beef and dairy"},
+      "III": {"lsu_per_ha": 0.5, "recommended_system": "semi_extensive", "notes": "Mixed crop-livestock optimal"},
+      "IV": {"lsu_per_ha": 0.2, "recommended_system": "extensive_ranching", "notes": "Rotational grazing essential"},
+      "V": {"lsu_per_ha": 0.1, "recommended_system": "extensive_ranching", "notes": "Very low carrying capacity; game may be better"}
+    },
+    "goats": {
+      "I": {"heads_per_ha": 3.0, "recommended_system": "intensive_stall_fed", "notes": "Dairy goats viable"},
+      "II": {"heads_per_ha": 2.5, "recommended_system": "semi_intensive", "notes": "Good for meat and milk"},
+      "III": {"heads_per_ha": 2.0, "recommended_system": "semi_extensive", "notes": "Browser advantage in mixed bush"},
+      "IV": {"heads_per_ha": 1.2, "recommended_system": "extensive", "notes": "Goats outperform cattle here"},
+      "V": {"heads_per_ha": 0.8, "recommended_system": "extensive", "notes": "Best livestock option for zone V"}
+    },
+    "sheep": {
+      "I": {"heads_per_ha": 2.5, "recommended_system": "intensive", "notes": "Good for wool and meat"},
+      "II": {"heads_per_ha": 2.0, "recommended_system": "semi_intensive", "notes": "Dorper and local breeds"},
+      "III": {"heads_per_ha": 1.5, "recommended_system": "semi_extensive", "notes": "Mixed with goats"},
+      "IV": {"heads_per_ha": 0.8, "recommended_system": "extensive", "notes": "Marginal"},
+      "V": {"heads_per_ha": 0.4, "recommended_system": "extensive", "notes": "Not recommended"}
+    },
+    "poultry": {
+      "I": {"birds_per_ha": 500, "recommended_system": "intensive_layers", "notes": "Excellent for layers and broilers"},
+      "II": {"birds_per_ha": 400, "recommended_system": "intensive", "notes": "Commercial viable"},
+      "III": {"birds_per_ha": 300, "recommended_system": "semi_intensive", "notes": "Supplement with local feed"},
+      "IV": {"birds_per_ha": 200, "recommended_system": "semi_intensive", "notes": "Heat stress management needed"},
+      "V": {"birds_per_ha": 100, "recommended_system": "extensive_indigenous", "notes": "Indigenous breeds only"}
+    },
+    "pigs": {
+      "I": {"heads_per_ha": 8, "recommended_system": "intensive", "notes": "Good water supply essential"},
+      "II": {"heads_per_ha": 6, "recommended_system": "semi_intensive", "notes": "Feed from crop residues"},
+      "III": {"heads_per_ha": 4, "recommended_system": "semi_intensive", "notes": "Water and heat management key"},
+      "IV": {"heads_per_ha": 2, "recommended_system": "semi_extensive", "notes": "Not ideal"},
+      "V": {"heads_per_ha": 1, "recommended_system": "not_recommended", "notes": "Water scarcity prohibitive"}
+    }
+  },
+  "market_prices_usd": {
+    "maize": {"unit": "t", "min": 250, "max": 400, "typical": 320, "notes": "GMB price + private market"},
+    "sorghum": {"unit": "t", "min": 200, "max": 350, "typical": 280},
+    "groundnuts": {"unit": "t", "min": 800, "max": 1500, "typical": 1100, "notes": "High value crop"},
+    "sunflower": {"unit": "t", "min": 400, "max": 600, "typical": 500},
+    "cotton": {"unit": "t", "min": 300, "max": 500, "typical": 400, "notes": "Contract farming common"},
+    "tobacco": {"unit": "t", "min": 2500, "max": 5000, "typical": 3500, "notes": "Grade dependent"},
+    "vegetables": {"unit": "t", "min": 200, "max": 800, "typical": 400, "notes": "Highly variable by type"},
+    "fodder": {"unit": "t", "min": 50, "max": 150, "typical": 80, "notes": "Often used on-farm"},
+    "goat_meat": {"unit": "head", "min": 80, "max": 150, "typical": 110},
+    "cattle_beef": {"unit": "head", "min": 400, "max": 800, "typical": 600},
+    "poultry_broiler": {"unit": "bird", "min": 5, "max": 10, "typical": 7},
+    "poultry_eggs": {"unit": "tray_30", "min": 3, "max": 6, "typical": 4.5},
+    "pig_meat": {"unit": "head", "min": 150, "max": 300, "typical": 220}
+  },
+  "input_costs_usd_per_ha": {
+    "maize": {"seed": 40, "fertilizer": 150, "chemicals": 30, "labor_days": 45, "total": 280},
+    "sorghum": {"seed": 25, "fertilizer": 80, "chemicals": 20, "labor_days": 35, "total": 160},
+    "groundnuts": {"seed": 120, "fertilizer": 60, "chemicals": 25, "labor_days": 50, "total": 255},
+    "sunflower": {"seed": 35, "fertilizer": 70, "chemicals": 25, "labor_days": 30, "total": 160},
+    "cotton": {"seed": 30, "fertilizer": 100, "chemicals": 50, "labor_days": 60, "total": 240},
+    "tobacco": {"seed": 50, "fertilizer": 250, "chemicals": 100, "labor_days": 120, "total": 520},
+    "vegetables": {"seed": 100, "fertilizer": 200, "chemicals": 80, "labor_days": 150, "total": 530},
+    "fodder": {"seed": 30, "fertilizer": 60, "chemicals": 10, "labor_days": 25, "total": 125}
+  },
+  "livestock_costs_usd_per_head_per_year": {
+    "cattle": {"feed": 150, "veterinary": 30, "labor_days": 15, "infrastructure_amortized": 20, "total": 200},
+    "goats": {"feed": 40, "veterinary": 15, "labor_days": 8, "infrastructure_amortized": 5, "total": 60},
+    "sheep": {"feed": 35, "veterinary": 12, "labor_days": 7, "infrastructure_amortized": 5, "total": 52},
+    "poultry_layers": {"feed": 8, "veterinary": 1, "labor_days": 0.5, "infrastructure_amortized": 2, "total": 11},
+    "poultry_broilers": {"feed": 4, "veterinary": 0.5, "labor_days": 0.2, "infrastructure_amortized": 0.5, "total": 5},
+    "pigs": {"feed": 200, "veterinary": 25, "labor_days": 12, "infrastructure_amortized": 15, "total": 240}
+  }
+}

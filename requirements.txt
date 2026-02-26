@@ -3,3 +3,4 @@ numpy>=2.0
 pandas>=2.0
 streamlit>=1.38
 altair>=5.0
+pulp>=2.7
