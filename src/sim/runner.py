@@ -72,5 +72,47 @@ def run(
     print(f"Simulation finished: {days} days, policy={policy}, output={out_path}")
 
 
+def run_simulation(
+    days: int = 30,
+    policy: Literal["baseline", "agent"] = "agent",
+    agent_config: dict | None = None,
+    verbose: bool = True,
+) -> dict:
+    """
+    Run simulation and return results dict (for programmatic use).
+    """
+    state = initial_state()
+    sim = FarmSimulator()
+
+    if policy == "baseline":
+        actor = BaselineFixedSchedulePolicy(liters_per_plot=120)
+    else:
+        actor = RuleBasedIrrigationPolicy(**(agent_config or {}))
+
+    total_water = 0.0
+
+    for day in range(days):
+        cycle_id = f"day-{day+1:03d}"
+        plan, rationale = actor.decide(state, cycle_id)
+        state, decision, outcome = sim.step(
+            state=state,
+            plan_by_plot=plan.irrigation_by_plot_liters,
+            cycle_id=cycle_id,
+            agent_id=plan.agent_id,
+            rationale=rationale,
+            policy_version=actor.policy_version,
+        )
+        total_water += sum(plan.irrigation_by_plot_liters.values())
+
+    return {
+        "days": days,
+        "total_water_applied_liters": round(total_water, 2),
+        "avg_daily_water_applied_liters": round(total_water / days, 2),
+        "crop_stress_events_total": state.kpis.crop_stress_events,
+        "final_water_use_efficiency": round(state.kpis.water_use_efficiency, 4),
+        "final_yield_estimate_tons_per_ha": round(state.kpis.yield_estimate_tons_per_ha, 3),
+    }
+
+
 if __name__ == "__main__":
     run()

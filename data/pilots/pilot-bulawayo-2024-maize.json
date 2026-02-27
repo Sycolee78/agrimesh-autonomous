@@ -1,0 +1,2737 @@
+{
+  "farm_id": "pilot-bulawayo-2024-maize",
+  "location": "bulawayo",
+  "aez_zone": "IV",
+  "season": "2024-2025",
+  "crop": "maize",
+  "area_ha": 5.0,
+  "planting_date": "2024-11-12",
+  "harvest_date": "2025-03-22",
+  "final_yield_tons": 24.2,
+  "metadata": {
+    "generated_at": "2026-02-27",
+    "irrigation_style": "erratic",
+    "weather_source": "open-meteo",
+    "total_rainfall_mm": 594.5,
+    "total_irrigation_liters": 680667.0
+  },
+  "events": [
+    {
+      "date": "2024-11-12",
+      "event_type": "planting",
+      "details": {
+        "crop": "maize",
+        "area_ha": 5.0
+      }
+    },
+    {
+      "date": "2024-11-14",
+      "event_type": "fertilizer",
+      "details": {
+        "type": "Basal",
+        "growth_day": 14
+      }
+    },
+    {
+      "date": "2024-12-05",
+      "event_type": "fertilizer",
+      "details": {
+        "type": "Top-dress 1",
+        "growth_day": 35
+      }
+    },
+    {
+      "date": "2024-12-25",
+      "event_type": "fertilizer",
+      "details": {
+        "type": "Top-dress 2",
+        "growth_day": 55
+      }
+    },
+    {
+      "date": "2025-02-05",
+      "event_type": "pest",
+      "details": {
+        "observation": "Fall armyworm spotted"
+      }
+    },
+    {
+      "date": "2025-03-22",
+      "event_type": "harvest",
+      "details": {
+        "yield_tons": 24.2,
+        "yield_per_ha": 4.84
+      }
+    }
+  ],
+  "daily_records": [
+    {
+      "date": "2024-11-01",
+      "weather": {
+        "temp_max_c": 31.0,
+        "temp_min_c": 16.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 57.0,
+        "et0_mm": 6.44
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 1
+    },
+    {
+      "date": "2024-11-02",
+      "weather": {
+        "temp_max_c": 33.0,
+        "temp_min_c": 16.3,
+        "rain_mm": 0.0,
+        "humidity_pct": 37.0,
+        "et0_mm": 8.06
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 2
+    },
+    {
+      "date": "2024-11-03",
+      "weather": {
+        "temp_max_c": 35.2,
+        "temp_min_c": 18.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 28.0,
+        "et0_mm": 8.57
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 3
+    },
+    {
+      "date": "2024-11-04",
+      "weather": {
+        "temp_max_c": 35.5,
+        "temp_min_c": 20.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 21.0,
+        "et0_mm": 8.47
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 4
+    },
+    {
+      "date": "2024-11-05",
+      "weather": {
+        "temp_max_c": 35.2,
+        "temp_min_c": 20.2,
+        "rain_mm": 0.0,
+        "humidity_pct": 23.0,
+        "et0_mm": 7.86
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 5
+    },
+    {
+      "date": "2024-11-06",
+      "weather": {
+        "temp_max_c": 33.0,
+        "temp_min_c": 20.8,
+        "rain_mm": 6.4,
+        "humidity_pct": 47.0,
+        "et0_mm": 6.4
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 576.7,
+      "observations": [
+        "Irrigated 577L"
+      ],
+      "crop_stage": "germination",
+      "growth_day": 6
+    },
+    {
+      "date": "2024-11-07",
+      "weather": {
+        "temp_max_c": 29.9,
+        "temp_min_c": 17.2,
+        "rain_mm": 0.2,
+        "humidity_pct": 66.0,
+        "et0_mm": 5.98
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 7
+    },
+    {
+      "date": "2024-11-08",
+      "weather": {
+        "temp_max_c": 27.6,
+        "temp_min_c": 16.8,
+        "rain_mm": 0.0,
+        "humidity_pct": 67.0,
+        "et0_mm": 5.31
+      },
+      "soil_moisture_measured": 0.337,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 34%"
+      ],
+      "crop_stage": "germination",
+      "growth_day": 8
+    },
+    {
+      "date": "2024-11-09",
+      "weather": {
+        "temp_max_c": 30.7,
+        "temp_min_c": 16.4,
+        "rain_mm": 0.3,
+        "humidity_pct": 61.0,
+        "et0_mm": 5.68
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "germination",
+      "growth_day": 9
+    },
+    {
+      "date": "2024-11-10",
+      "weather": {
+        "temp_max_c": 32.2,
+        "temp_min_c": 20.0,
+        "rain_mm": 1.8,
+        "humidity_pct": 51.0,
+        "et0_mm": 6.07
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 10
+    },
+    {
+      "date": "2024-11-11",
+      "weather": {
+        "temp_max_c": 32.6,
+        "temp_min_c": 18.3,
+        "rain_mm": 6.3,
+        "humidity_pct": 54.0,
+        "et0_mm": 6.27
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 576.7,
+      "observations": [
+        "Irrigated 577L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 11
+    },
+    {
+      "date": "2024-11-12",
+      "weather": {
+        "temp_max_c": 30.6,
+        "temp_min_c": 17.6,
+        "rain_mm": 14.0,
+        "humidity_pct": 77.0,
+        "et0_mm": 4.45
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 897.0,
+      "observations": [
+        "Planting completed",
+        "Irrigated 897L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 12
+    },
+    {
+      "date": "2024-11-13",
+      "weather": {
+        "temp_max_c": 25.7,
+        "temp_min_c": 17.9,
+        "rain_mm": 20.3,
+        "humidity_pct": 84.0,
+        "et0_mm": 3.52
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Heavy rain"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 13
+    },
+    {
+      "date": "2024-11-14",
+      "weather": {
+        "temp_max_c": 19.5,
+        "temp_min_c": 15.5,
+        "rain_mm": 1.0,
+        "humidity_pct": 85.0,
+        "et0_mm": 2.25
+      },
+      "soil_moisture_measured": 0.446,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Basal fertilizer applied",
+        "Soil moisture check: 45%"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 14
+    },
+    {
+      "date": "2024-11-15",
+      "weather": {
+        "temp_max_c": 19.9,
+        "temp_min_c": 14.1,
+        "rain_mm": 0.2,
+        "humidity_pct": 79.0,
+        "et0_mm": 2.67
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 15
+    },
+    {
+      "date": "2024-11-16",
+      "weather": {
+        "temp_max_c": 26.0,
+        "temp_min_c": 14.9,
+        "rain_mm": 0.4,
+        "humidity_pct": 70.0,
+        "et0_mm": 4.82
+      },
+      "soil_moisture_measured": 0.511,
+      "irrigation_applied_liters": 897.0,
+      "observations": [
+        "Irrigated 897L",
+        "Soil moisture check: 51%"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 16
+    },
+    {
+      "date": "2024-11-17",
+      "weather": {
+        "temp_max_c": 28.6,
+        "temp_min_c": 15.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 51.0,
+        "et0_mm": 6.96
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 17
+    },
+    {
+      "date": "2024-11-18",
+      "weather": {
+        "temp_max_c": 28.8,
+        "temp_min_c": 16.5,
+        "rain_mm": 0.1,
+        "humidity_pct": 45.0,
+        "et0_mm": 6.54
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 18
+    },
+    {
+      "date": "2024-11-19",
+      "weather": {
+        "temp_max_c": 31.1,
+        "temp_min_c": 18.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 41.0,
+        "et0_mm": 7.72
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 19
+    },
+    {
+      "date": "2024-11-20",
+      "weather": {
+        "temp_max_c": 30.4,
+        "temp_min_c": 18.1,
+        "rain_mm": 0.0,
+        "humidity_pct": 40.0,
+        "et0_mm": 8.2
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 20
+    },
+    {
+      "date": "2024-11-21",
+      "weather": {
+        "temp_max_c": 32.2,
+        "temp_min_c": 18.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 39.0,
+        "et0_mm": 8.08
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 21
+    },
+    {
+      "date": "2024-11-22",
+      "weather": {
+        "temp_max_c": 34.0,
+        "temp_min_c": 19.2,
+        "rain_mm": 0.0,
+        "humidity_pct": 28.0,
+        "et0_mm": 8.28
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 897.0,
+      "observations": [
+        "Irrigated 897L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 22
+    },
+    {
+      "date": "2024-11-23",
+      "weather": {
+        "temp_max_c": 32.5,
+        "temp_min_c": 18.2,
+        "rain_mm": 8.4,
+        "humidity_pct": 44.0,
+        "et0_mm": 6.18
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 23
+    },
+    {
+      "date": "2024-11-24",
+      "weather": {
+        "temp_max_c": 27.0,
+        "temp_min_c": 17.9,
+        "rain_mm": 15.2,
+        "humidity_pct": 78.0,
+        "et0_mm": 4.09
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 24
+    },
+    {
+      "date": "2024-11-25",
+      "weather": {
+        "temp_max_c": 25.5,
+        "temp_min_c": 17.5,
+        "rain_mm": 1.1,
+        "humidity_pct": 79.0,
+        "et0_mm": 3.56
+      },
+      "soil_moisture_measured": 0.441,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 44%"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 25
+    },
+    {
+      "date": "2024-11-26",
+      "weather": {
+        "temp_max_c": 27.0,
+        "temp_min_c": 17.9,
+        "rain_mm": 2.5,
+        "humidity_pct": 71.0,
+        "et0_mm": 5.41
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 26
+    },
+    {
+      "date": "2024-11-27",
+      "weather": {
+        "temp_max_c": 27.8,
+        "temp_min_c": 17.3,
+        "rain_mm": 0.3,
+        "humidity_pct": 73.0,
+        "et0_mm": 5.16
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 1501.1,
+      "observations": [
+        "Irrigated 1501L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 27
+    },
+    {
+      "date": "2024-11-28",
+      "weather": {
+        "temp_max_c": 30.0,
+        "temp_min_c": 18.9,
+        "rain_mm": 0.3,
+        "humidity_pct": 68.0,
+        "et0_mm": 5.87
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 28
+    },
+    {
+      "date": "2024-11-29",
+      "weather": {
+        "temp_max_c": 22.5,
+        "temp_min_c": 16.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 78.0,
+        "et0_mm": 3.58
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 29
+    },
+    {
+      "date": "2024-11-30",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 14.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 61.0,
+        "et0_mm": 6.4
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 30
+    },
+    {
+      "date": "2024-12-01",
+      "weather": {
+        "temp_max_c": 28.4,
+        "temp_min_c": 13.1,
+        "rain_mm": 0.0,
+        "humidity_pct": 43.0,
+        "et0_mm": 7.41
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 31
+    },
+    {
+      "date": "2024-12-02",
+      "weather": {
+        "temp_max_c": 31.8,
+        "temp_min_c": 15.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 32.0,
+        "et0_mm": 7.97
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "vegetative",
+      "growth_day": 32
+    },
+    {
+      "date": "2024-12-03",
+      "weather": {
+        "temp_max_c": 33.9,
+        "temp_min_c": 18.7,
+        "rain_mm": 0.0,
+        "humidity_pct": 25.0,
+        "et0_mm": 8.56
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 1501.1,
+      "observations": [
+        "Irrigated 1501L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 33
+    },
+    {
+      "date": "2024-12-04",
+      "weather": {
+        "temp_max_c": 34.5,
+        "temp_min_c": 20.8,
+        "rain_mm": 0.0,
+        "humidity_pct": 22.0,
+        "et0_mm": 8.5
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 1501.1,
+      "observations": [
+        "Irrigated 1501L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 34
+    },
+    {
+      "date": "2024-12-05",
+      "weather": {
+        "temp_max_c": 36.0,
+        "temp_min_c": 21.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 20.0,
+        "et0_mm": 7.61
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Top-dress 1 fertilizer applied"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 35
+    },
+    {
+      "date": "2024-12-06",
+      "weather": {
+        "temp_max_c": 36.4,
+        "temp_min_c": 22.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 20.0,
+        "et0_mm": 8.4
+      },
+      "soil_moisture_measured": 0.383,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L",
+        "Soil moisture check: 38%"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 36
+    },
+    {
+      "date": "2024-12-07",
+      "weather": {
+        "temp_max_c": 35.7,
+        "temp_min_c": 24.1,
+        "rain_mm": 0.2,
+        "humidity_pct": 27.0,
+        "et0_mm": 9.37
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 37
+    },
+    {
+      "date": "2024-12-08",
+      "weather": {
+        "temp_max_c": 33.6,
+        "temp_min_c": 20.2,
+        "rain_mm": 0.0,
+        "humidity_pct": 44.0,
+        "et0_mm": 8.68
+      },
+      "soil_moisture_measured": 0.379,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry",
+        "Soil moisture check: 38%"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 38
+    },
+    {
+      "date": "2024-12-09",
+      "weather": {
+        "temp_max_c": 33.5,
+        "temp_min_c": 20.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 39.0,
+        "et0_mm": 8.43
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "vegetative",
+      "growth_day": 39
+    },
+    {
+      "date": "2024-12-10",
+      "weather": {
+        "temp_max_c": 33.8,
+        "temp_min_c": 20.3,
+        "rain_mm": 0.0,
+        "humidity_pct": 32.0,
+        "et0_mm": 9.0
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 40
+    },
+    {
+      "date": "2024-12-11",
+      "weather": {
+        "temp_max_c": 35.4,
+        "temp_min_c": 20.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 26.0,
+        "et0_mm": 9.21
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 41
+    },
+    {
+      "date": "2024-12-12",
+      "weather": {
+        "temp_max_c": 35.9,
+        "temp_min_c": 21.8,
+        "rain_mm": 0.0,
+        "humidity_pct": 16.0,
+        "et0_mm": 9.57
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 42
+    },
+    {
+      "date": "2024-12-13",
+      "weather": {
+        "temp_max_c": 37.0,
+        "temp_min_c": 22.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 16.0,
+        "et0_mm": 8.23
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 43
+    },
+    {
+      "date": "2024-12-14",
+      "weather": {
+        "temp_max_c": 35.0,
+        "temp_min_c": 23.2,
+        "rain_mm": 0.5,
+        "humidity_pct": 31.0,
+        "et0_mm": 8.1
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L",
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 44
+    },
+    {
+      "date": "2024-12-15",
+      "weather": {
+        "temp_max_c": 32.5,
+        "temp_min_c": 18.4,
+        "rain_mm": 0.4,
+        "humidity_pct": 58.0,
+        "et0_mm": 6.39
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 45
+    },
+    {
+      "date": "2024-12-16",
+      "weather": {
+        "temp_max_c": 32.5,
+        "temp_min_c": 20.6,
+        "rain_mm": 4.4,
+        "humidity_pct": 58.0,
+        "et0_mm": 5.4
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 46
+    },
+    {
+      "date": "2024-12-17",
+      "weather": {
+        "temp_max_c": 31.5,
+        "temp_min_c": 20.6,
+        "rain_mm": 1.1,
+        "humidity_pct": 63.0,
+        "et0_mm": 5.97
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 47
+    },
+    {
+      "date": "2024-12-18",
+      "weather": {
+        "temp_max_c": 25.4,
+        "temp_min_c": 18.9,
+        "rain_mm": 23.6,
+        "humidity_pct": 86.0,
+        "et0_mm": 2.67
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Heavy rain",
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 48
+    },
+    {
+      "date": "2024-12-19",
+      "weather": {
+        "temp_max_c": 26.1,
+        "temp_min_c": 17.9,
+        "rain_mm": 9.5,
+        "humidity_pct": 83.0,
+        "et0_mm": 4.12
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 49
+    },
+    {
+      "date": "2024-12-20",
+      "weather": {
+        "temp_max_c": 27.2,
+        "temp_min_c": 17.8,
+        "rain_mm": 6.4,
+        "humidity_pct": 80.0,
+        "et0_mm": 4.5
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 50
+    },
+    {
+      "date": "2024-12-21",
+      "weather": {
+        "temp_max_c": 28.0,
+        "temp_min_c": 17.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 69.0,
+        "et0_mm": 6.02
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 51
+    },
+    {
+      "date": "2024-12-22",
+      "weather": {
+        "temp_max_c": 29.1,
+        "temp_min_c": 19.9,
+        "rain_mm": 0.0,
+        "humidity_pct": 59.0,
+        "et0_mm": 6.5
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 52
+    },
+    {
+      "date": "2024-12-23",
+      "weather": {
+        "temp_max_c": 30.7,
+        "temp_min_c": 19.6,
+        "rain_mm": 1.1,
+        "humidity_pct": 64.0,
+        "et0_mm": 6.26
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil appears dry"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 53
+    },
+    {
+      "date": "2024-12-24",
+      "weather": {
+        "temp_max_c": 28.5,
+        "temp_min_c": 18.5,
+        "rain_mm": 12.4,
+        "humidity_pct": 78.0,
+        "et0_mm": 4.43
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 54
+    },
+    {
+      "date": "2024-12-25",
+      "weather": {
+        "temp_max_c": 24.6,
+        "temp_min_c": 18.0,
+        "rain_mm": 4.2,
+        "humidity_pct": 83.0,
+        "et0_mm": 3.92
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Top-dress 2 fertilizer applied"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 55
+    },
+    {
+      "date": "2024-12-26",
+      "weather": {
+        "temp_max_c": 25.9,
+        "temp_min_c": 17.4,
+        "rain_mm": 20.3,
+        "humidity_pct": 83.0,
+        "et0_mm": 3.66
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Heavy rain"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 56
+    },
+    {
+      "date": "2024-12-27",
+      "weather": {
+        "temp_max_c": 26.5,
+        "temp_min_c": 17.8,
+        "rain_mm": 8.2,
+        "humidity_pct": 82.0,
+        "et0_mm": 4.6
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 57
+    },
+    {
+      "date": "2024-12-28",
+      "weather": {
+        "temp_max_c": 26.5,
+        "temp_min_c": 18.8,
+        "rain_mm": 8.6,
+        "humidity_pct": 84.0,
+        "et0_mm": 4.5
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 58
+    },
+    {
+      "date": "2024-12-29",
+      "weather": {
+        "temp_max_c": 26.6,
+        "temp_min_c": 18.0,
+        "rain_mm": 15.6,
+        "humidity_pct": 88.0,
+        "et0_mm": 3.38
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 59
+    },
+    {
+      "date": "2024-12-30",
+      "weather": {
+        "temp_max_c": 24.8,
+        "temp_min_c": 18.1,
+        "rain_mm": 8.4,
+        "humidity_pct": 86.0,
+        "et0_mm": 3.88
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 60
+    },
+    {
+      "date": "2024-12-31",
+      "weather": {
+        "temp_max_c": 26.2,
+        "temp_min_c": 18.2,
+        "rain_mm": 3.1,
+        "humidity_pct": 83.0,
+        "et0_mm": 4.61
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "flowering",
+      "growth_day": 61
+    },
+    {
+      "date": "2025-01-01",
+      "weather": {
+        "temp_max_c": 27.3,
+        "temp_min_c": 18.2,
+        "rain_mm": 1.9,
+        "humidity_pct": 78.0,
+        "et0_mm": 5.28
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 62
+    },
+    {
+      "date": "2025-01-02",
+      "weather": {
+        "temp_max_c": 26.8,
+        "temp_min_c": 17.1,
+        "rain_mm": 15.7,
+        "humidity_pct": 79.0,
+        "et0_mm": 4.56
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 63
+    },
+    {
+      "date": "2025-01-03",
+      "weather": {
+        "temp_max_c": 24.6,
+        "temp_min_c": 17.5,
+        "rain_mm": 9.2,
+        "humidity_pct": 84.0,
+        "et0_mm": 3.44
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "flowering",
+      "growth_day": 64
+    },
+    {
+      "date": "2025-01-04",
+      "weather": {
+        "temp_max_c": 26.0,
+        "temp_min_c": 17.8,
+        "rain_mm": 19.0,
+        "humidity_pct": 85.0,
+        "et0_mm": 4.19
+      },
+      "soil_moisture_measured": 0.679,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 68%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 65
+    },
+    {
+      "date": "2025-01-05",
+      "weather": {
+        "temp_max_c": 24.6,
+        "temp_min_c": 18.2,
+        "rain_mm": 9.5,
+        "humidity_pct": 88.0,
+        "et0_mm": 3.68
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 66
+    },
+    {
+      "date": "2025-01-06",
+      "weather": {
+        "temp_max_c": 24.9,
+        "temp_min_c": 17.9,
+        "rain_mm": 4.6,
+        "humidity_pct": 86.0,
+        "et0_mm": 3.93
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 67
+    },
+    {
+      "date": "2025-01-07",
+      "weather": {
+        "temp_max_c": 25.1,
+        "temp_min_c": 18.0,
+        "rain_mm": 4.5,
+        "humidity_pct": 86.0,
+        "et0_mm": 4.17
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 68
+    },
+    {
+      "date": "2025-01-08",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 17.2,
+        "rain_mm": 4.4,
+        "humidity_pct": 85.0,
+        "et0_mm": 4.41
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 69
+    },
+    {
+      "date": "2025-01-09",
+      "weather": {
+        "temp_max_c": 24.6,
+        "temp_min_c": 17.7,
+        "rain_mm": 9.3,
+        "humidity_pct": 86.0,
+        "et0_mm": 3.95
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 70
+    },
+    {
+      "date": "2025-01-10",
+      "weather": {
+        "temp_max_c": 25.2,
+        "temp_min_c": 18.1,
+        "rain_mm": 4.1,
+        "humidity_pct": 85.0,
+        "et0_mm": 3.93
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 71
+    },
+    {
+      "date": "2025-01-11",
+      "weather": {
+        "temp_max_c": 25.2,
+        "temp_min_c": 18.0,
+        "rain_mm": 4.9,
+        "humidity_pct": 83.0,
+        "et0_mm": 3.78
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 72
+    },
+    {
+      "date": "2025-01-12",
+      "weather": {
+        "temp_max_c": 27.0,
+        "temp_min_c": 18.2,
+        "rain_mm": 3.0,
+        "humidity_pct": 78.0,
+        "et0_mm": 5.47
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 73
+    },
+    {
+      "date": "2025-01-13",
+      "weather": {
+        "temp_max_c": 25.6,
+        "temp_min_c": 18.4,
+        "rain_mm": 9.5,
+        "humidity_pct": 87.0,
+        "et0_mm": 3.51
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 74
+    },
+    {
+      "date": "2025-01-14",
+      "weather": {
+        "temp_max_c": 26.0,
+        "temp_min_c": 18.3,
+        "rain_mm": 1.8,
+        "humidity_pct": 84.0,
+        "et0_mm": 4.27
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 75
+    },
+    {
+      "date": "2025-01-15",
+      "weather": {
+        "temp_max_c": 25.9,
+        "temp_min_c": 18.2,
+        "rain_mm": 21.3,
+        "humidity_pct": 87.0,
+        "et0_mm": 3.9
+      },
+      "soil_moisture_measured": 0.783,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Heavy rain",
+        "Waterlogging concern",
+        "Soil moisture check: 78%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 76
+    },
+    {
+      "date": "2025-01-16",
+      "weather": {
+        "temp_max_c": 23.6,
+        "temp_min_c": 18.2,
+        "rain_mm": 17.1,
+        "humidity_pct": 90.0,
+        "et0_mm": 3.05
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 77
+    },
+    {
+      "date": "2025-01-17",
+      "weather": {
+        "temp_max_c": 20.8,
+        "temp_min_c": 17.3,
+        "rain_mm": 19.9,
+        "humidity_pct": 91.0,
+        "et0_mm": 2.06
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 78
+    },
+    {
+      "date": "2025-01-18",
+      "weather": {
+        "temp_max_c": 23.0,
+        "temp_min_c": 16.9,
+        "rain_mm": 4.1,
+        "humidity_pct": 88.0,
+        "et0_mm": 2.58
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 79
+    },
+    {
+      "date": "2025-01-19",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 17.5,
+        "rain_mm": 18.5,
+        "humidity_pct": 87.0,
+        "et0_mm": 2.94
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 80
+    },
+    {
+      "date": "2025-01-20",
+      "weather": {
+        "temp_max_c": 26.6,
+        "temp_min_c": 18.0,
+        "rain_mm": 0.4,
+        "humidity_pct": 78.0,
+        "et0_mm": 5.6
+      },
+      "soil_moisture_measured": 0.965,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 96%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 81
+    },
+    {
+      "date": "2025-01-21",
+      "weather": {
+        "temp_max_c": 23.5,
+        "temp_min_c": 17.8,
+        "rain_mm": 1.7,
+        "humidity_pct": 83.0,
+        "et0_mm": 3.98
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 2697.5,
+      "observations": [
+        "Irrigated 2698L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 82
+    },
+    {
+      "date": "2025-01-22",
+      "weather": {
+        "temp_max_c": 22.5,
+        "temp_min_c": 15.2,
+        "rain_mm": 0.3,
+        "humidity_pct": 81.0,
+        "et0_mm": 3.89
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 83
+    },
+    {
+      "date": "2025-01-23",
+      "weather": {
+        "temp_max_c": 22.6,
+        "temp_min_c": 17.1,
+        "rain_mm": 0.8,
+        "humidity_pct": 82.0,
+        "et0_mm": 3.27
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 84
+    },
+    {
+      "date": "2025-01-24",
+      "weather": {
+        "temp_max_c": 25.2,
+        "temp_min_c": 15.9,
+        "rain_mm": 0.0,
+        "humidity_pct": 75.0,
+        "et0_mm": 5.38
+      },
+      "soil_moisture_measured": 0.965,
+      "irrigation_applied_liters": 4235.2,
+      "observations": [
+        "Irrigated 4235L",
+        "Soil moisture check: 96%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 85
+    },
+    {
+      "date": "2025-01-25",
+      "weather": {
+        "temp_max_c": 24.8,
+        "temp_min_c": 16.7,
+        "rain_mm": 0.8,
+        "humidity_pct": 75.0,
+        "et0_mm": 5.01
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 86
+    },
+    {
+      "date": "2025-01-26",
+      "weather": {
+        "temp_max_c": 24.7,
+        "temp_min_c": 17.5,
+        "rain_mm": 0.7,
+        "humidity_pct": 79.0,
+        "et0_mm": 4.89
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 87
+    },
+    {
+      "date": "2025-01-27",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 17.4,
+        "rain_mm": 0.2,
+        "humidity_pct": 74.0,
+        "et0_mm": 5.19
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 88
+    },
+    {
+      "date": "2025-01-28",
+      "weather": {
+        "temp_max_c": 22.4,
+        "temp_min_c": 16.4,
+        "rain_mm": 0.8,
+        "humidity_pct": 79.0,
+        "et0_mm": 3.46
+      },
+      "soil_moisture_measured": 0.888,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 89%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 89
+    },
+    {
+      "date": "2025-01-29",
+      "weather": {
+        "temp_max_c": 24.0,
+        "temp_min_c": 14.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 69.0,
+        "et0_mm": 5.74
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 90
+    },
+    {
+      "date": "2025-01-30",
+      "weather": {
+        "temp_max_c": 26.0,
+        "temp_min_c": 14.9,
+        "rain_mm": 0.0,
+        "humidity_pct": 64.0,
+        "et0_mm": 6.21
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 4235.2,
+      "observations": [
+        "Irrigated 4235L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 91
+    },
+    {
+      "date": "2025-01-31",
+      "weather": {
+        "temp_max_c": 30.2,
+        "temp_min_c": 14.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 54.0,
+        "et0_mm": 6.89
+      },
+      "soil_moisture_measured": 0.927,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 93%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 92
+    },
+    {
+      "date": "2025-02-01",
+      "weather": {
+        "temp_max_c": 31.2,
+        "temp_min_c": 17.3,
+        "rain_mm": 0.0,
+        "humidity_pct": 49.0,
+        "et0_mm": 7.15
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 93
+    },
+    {
+      "date": "2025-02-02",
+      "weather": {
+        "temp_max_c": 30.9,
+        "temp_min_c": 19.1,
+        "rain_mm": 0.0,
+        "humidity_pct": 53.0,
+        "et0_mm": 7.3
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 6810.5,
+      "observations": [
+        "Irrigated 6811L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 94
+    },
+    {
+      "date": "2025-02-03",
+      "weather": {
+        "temp_max_c": 30.9,
+        "temp_min_c": 18.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 49.0,
+        "et0_mm": 8.03
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 95
+    },
+    {
+      "date": "2025-02-04",
+      "weather": {
+        "temp_max_c": 29.9,
+        "temp_min_c": 18.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 49.0,
+        "et0_mm": 7.92
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "grain_fill",
+      "growth_day": 96
+    },
+    {
+      "date": "2025-02-05",
+      "weather": {
+        "temp_max_c": 31.9,
+        "temp_min_c": 18.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 46.0,
+        "et0_mm": 7.72
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Fall armyworm spotted"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 97
+    },
+    {
+      "date": "2025-02-06",
+      "weather": {
+        "temp_max_c": 31.7,
+        "temp_min_c": 18.9,
+        "rain_mm": 0.0,
+        "humidity_pct": 48.0,
+        "et0_mm": 7.7
+      },
+      "soil_moisture_measured": 0.801,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 80%"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 98
+    },
+    {
+      "date": "2025-02-07",
+      "weather": {
+        "temp_max_c": 28.5,
+        "temp_min_c": 19.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 49.0,
+        "et0_mm": 7.49
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 6810.5,
+      "observations": [
+        "Irrigated 6811L"
+      ],
+      "crop_stage": "grain_fill",
+      "growth_day": 99
+    },
+    {
+      "date": "2025-02-08",
+      "weather": {
+        "temp_max_c": 29.9,
+        "temp_min_c": 17.5,
+        "rain_mm": 3.1,
+        "humidity_pct": 55.0,
+        "et0_mm": 6.04
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 100
+    },
+    {
+      "date": "2025-02-09",
+      "weather": {
+        "temp_max_c": 23.1,
+        "temp_min_c": 18.4,
+        "rain_mm": 13.7,
+        "humidity_pct": 75.0,
+        "et0_mm": 2.13
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 101
+    },
+    {
+      "date": "2025-02-10",
+      "weather": {
+        "temp_max_c": 26.5,
+        "temp_min_c": 18.0,
+        "rain_mm": 4.0,
+        "humidity_pct": 82.0,
+        "et0_mm": 4.47
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 102
+    },
+    {
+      "date": "2025-02-11",
+      "weather": {
+        "temp_max_c": 24.8,
+        "temp_min_c": 18.4,
+        "rain_mm": 22.9,
+        "humidity_pct": 86.0,
+        "et0_mm": 3.25
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Heavy rain",
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 103
+    },
+    {
+      "date": "2025-02-12",
+      "weather": {
+        "temp_max_c": 23.4,
+        "temp_min_c": 17.9,
+        "rain_mm": 17.2,
+        "humidity_pct": 90.0,
+        "et0_mm": 2.61
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 104
+    },
+    {
+      "date": "2025-02-13",
+      "weather": {
+        "temp_max_c": 23.5,
+        "temp_min_c": 17.9,
+        "rain_mm": 13.4,
+        "humidity_pct": 89.0,
+        "et0_mm": 2.69
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 105
+    },
+    {
+      "date": "2025-02-14",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 17.9,
+        "rain_mm": 11.3,
+        "humidity_pct": 89.0,
+        "et0_mm": 3.15
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 106
+    },
+    {
+      "date": "2025-02-15",
+      "weather": {
+        "temp_max_c": 25.3,
+        "temp_min_c": 18.2,
+        "rain_mm": 11.3,
+        "humidity_pct": 88.0,
+        "et0_mm": 3.84
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 107
+    },
+    {
+      "date": "2025-02-16",
+      "weather": {
+        "temp_max_c": 24.5,
+        "temp_min_c": 17.9,
+        "rain_mm": 12.1,
+        "humidity_pct": 88.0,
+        "et0_mm": 2.92
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 108
+    },
+    {
+      "date": "2025-02-17",
+      "weather": {
+        "temp_max_c": 24.5,
+        "temp_min_c": 17.6,
+        "rain_mm": 7.1,
+        "humidity_pct": 86.0,
+        "et0_mm": 3.83
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 11232.5,
+      "observations": [
+        "Irrigated 11232L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 109
+    },
+    {
+      "date": "2025-02-18",
+      "weather": {
+        "temp_max_c": 25.8,
+        "temp_min_c": 17.5,
+        "rain_mm": 0.7,
+        "humidity_pct": 85.0,
+        "et0_mm": 4.21
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 110
+    },
+    {
+      "date": "2025-02-19",
+      "weather": {
+        "temp_max_c": 26.1,
+        "temp_min_c": 18.4,
+        "rain_mm": 14.9,
+        "humidity_pct": 87.0,
+        "et0_mm": 3.81
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 111
+    },
+    {
+      "date": "2025-02-20",
+      "weather": {
+        "temp_max_c": 24.8,
+        "temp_min_c": 18.1,
+        "rain_mm": 15.7,
+        "humidity_pct": 89.0,
+        "et0_mm": 2.92
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 112
+    },
+    {
+      "date": "2025-02-21",
+      "weather": {
+        "temp_max_c": 26.1,
+        "temp_min_c": 18.0,
+        "rain_mm": 1.4,
+        "humidity_pct": 80.0,
+        "et0_mm": 4.52
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 113
+    },
+    {
+      "date": "2025-02-22",
+      "weather": {
+        "temp_max_c": 25.9,
+        "temp_min_c": 18.3,
+        "rain_mm": 0.6,
+        "humidity_pct": 84.0,
+        "et0_mm": 4.36
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 114
+    },
+    {
+      "date": "2025-02-23",
+      "weather": {
+        "temp_max_c": 26.6,
+        "temp_min_c": 18.7,
+        "rain_mm": 2.5,
+        "humidity_pct": 83.0,
+        "et0_mm": 4.76
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 20146.7,
+      "observations": [
+        "Irrigated 20147L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 115
+    },
+    {
+      "date": "2025-02-24",
+      "weather": {
+        "temp_max_c": 25.9,
+        "temp_min_c": 18.5,
+        "rain_mm": 1.5,
+        "humidity_pct": 80.0,
+        "et0_mm": 4.48
+      },
+      "soil_moisture_measured": 0.949,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 95%"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 116
+    },
+    {
+      "date": "2025-02-25",
+      "weather": {
+        "temp_max_c": 25.1,
+        "temp_min_c": 17.7,
+        "rain_mm": 2.2,
+        "humidity_pct": 83.0,
+        "et0_mm": 3.84
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 117
+    },
+    {
+      "date": "2025-02-26",
+      "weather": {
+        "temp_max_c": 24.8,
+        "temp_min_c": 18.1,
+        "rain_mm": 2.7,
+        "humidity_pct": 84.0,
+        "et0_mm": 3.74
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 118
+    },
+    {
+      "date": "2025-02-27",
+      "weather": {
+        "temp_max_c": 25.5,
+        "temp_min_c": 17.6,
+        "rain_mm": 1.1,
+        "humidity_pct": 80.0,
+        "et0_mm": 4.33
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 119
+    },
+    {
+      "date": "2025-02-28",
+      "weather": {
+        "temp_max_c": 25.5,
+        "temp_min_c": 16.8,
+        "rain_mm": 1.5,
+        "humidity_pct": 77.0,
+        "et0_mm": 4.12
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 120
+    },
+    {
+      "date": "2025-03-01",
+      "weather": {
+        "temp_max_c": 26.4,
+        "temp_min_c": 16.8,
+        "rain_mm": 1.0,
+        "humidity_pct": 76.0,
+        "et0_mm": 4.75
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 121
+    },
+    {
+      "date": "2025-03-02",
+      "weather": {
+        "temp_max_c": 26.6,
+        "temp_min_c": 17.4,
+        "rain_mm": 0.5,
+        "humidity_pct": 77.0,
+        "et0_mm": 4.56
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 122
+    },
+    {
+      "date": "2025-03-03",
+      "weather": {
+        "temp_max_c": 26.3,
+        "temp_min_c": 17.2,
+        "rain_mm": 0.0,
+        "humidity_pct": 71.0,
+        "et0_mm": 5.42
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 123
+    },
+    {
+      "date": "2025-03-04",
+      "weather": {
+        "temp_max_c": 26.2,
+        "temp_min_c": 16.1,
+        "rain_mm": 0.6,
+        "humidity_pct": 72.0,
+        "et0_mm": 5.02
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 124
+    },
+    {
+      "date": "2025-03-05",
+      "weather": {
+        "temp_max_c": 28.1,
+        "temp_min_c": 16.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 67.0,
+        "et0_mm": 5.81
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 125
+    },
+    {
+      "date": "2025-03-06",
+      "weather": {
+        "temp_max_c": 28.0,
+        "temp_min_c": 16.8,
+        "rain_mm": 0.0,
+        "humidity_pct": 65.0,
+        "et0_mm": 6.03
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 126
+    },
+    {
+      "date": "2025-03-07",
+      "weather": {
+        "temp_max_c": 28.5,
+        "temp_min_c": 17.7,
+        "rain_mm": 0.4,
+        "humidity_pct": 67.0,
+        "et0_mm": 5.75
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 127
+    },
+    {
+      "date": "2025-03-08",
+      "weather": {
+        "temp_max_c": 25.5,
+        "temp_min_c": 17.1,
+        "rain_mm": 1.0,
+        "humidity_pct": 72.0,
+        "et0_mm": 4.85
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 128
+    },
+    {
+      "date": "2025-03-09",
+      "weather": {
+        "temp_max_c": 26.6,
+        "temp_min_c": 16.6,
+        "rain_mm": 2.7,
+        "humidity_pct": 76.0,
+        "et0_mm": 4.41
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 129
+    },
+    {
+      "date": "2025-03-10",
+      "weather": {
+        "temp_max_c": 26.4,
+        "temp_min_c": 17.2,
+        "rain_mm": 0.5,
+        "humidity_pct": 74.0,
+        "et0_mm": 4.7
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 130
+    },
+    {
+      "date": "2025-03-11",
+      "weather": {
+        "temp_max_c": 25.5,
+        "temp_min_c": 17.1,
+        "rain_mm": 1.1,
+        "humidity_pct": 80.0,
+        "et0_mm": 4.15
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 131
+    },
+    {
+      "date": "2025-03-12",
+      "weather": {
+        "temp_max_c": 22.6,
+        "temp_min_c": 17.2,
+        "rain_mm": 2.6,
+        "humidity_pct": 88.0,
+        "et0_mm": 2.34
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 132
+    },
+    {
+      "date": "2025-03-13",
+      "weather": {
+        "temp_max_c": 25.2,
+        "temp_min_c": 16.5,
+        "rain_mm": 0.2,
+        "humidity_pct": 77.0,
+        "et0_mm": 4.32
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 133
+    },
+    {
+      "date": "2025-03-14",
+      "weather": {
+        "temp_max_c": 26.5,
+        "temp_min_c": 15.9,
+        "rain_mm": 0.9,
+        "humidity_pct": 70.0,
+        "et0_mm": 5.08
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 134
+    },
+    {
+      "date": "2025-03-15",
+      "weather": {
+        "temp_max_c": 24.9,
+        "temp_min_c": 15.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 74.0,
+        "et0_mm": 4.48
+      },
+      "soil_moisture_measured": 0.964,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 96%"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 135
+    },
+    {
+      "date": "2025-03-16",
+      "weather": {
+        "temp_max_c": 21.9,
+        "temp_min_c": 15.2,
+        "rain_mm": 0.2,
+        "humidity_pct": 79.0,
+        "et0_mm": 3.05
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 136
+    },
+    {
+      "date": "2025-03-17",
+      "weather": {
+        "temp_max_c": 24.5,
+        "temp_min_c": 13.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 71.0,
+        "et0_mm": 4.76
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 137
+    },
+    {
+      "date": "2025-03-18",
+      "weather": {
+        "temp_max_c": 24.6,
+        "temp_min_c": 13.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 72.0,
+        "et0_mm": 4.95
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 138
+    },
+    {
+      "date": "2025-03-19",
+      "weather": {
+        "temp_max_c": 24.5,
+        "temp_min_c": 13.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 69.0,
+        "et0_mm": 4.98
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 139
+    },
+    {
+      "date": "2025-03-20",
+      "weather": {
+        "temp_max_c": 24.0,
+        "temp_min_c": 14.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 72.0,
+        "et0_mm": 3.99
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 140
+    },
+    {
+      "date": "2025-03-21",
+      "weather": {
+        "temp_max_c": 26.0,
+        "temp_min_c": 14.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 64.0,
+        "et0_mm": 4.81
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 141
+    },
+    {
+      "date": "2025-03-22",
+      "weather": {
+        "temp_max_c": 27.4,
+        "temp_min_c": 15.1,
+        "rain_mm": 0.0,
+        "humidity_pct": 55.0,
+        "et0_mm": 5.78
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 142
+    },
+    {
+      "date": "2025-03-23",
+      "weather": {
+        "temp_max_c": 28.1,
+        "temp_min_c": 15.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 56.0,
+        "et0_mm": 5.96
+      },
+      "soil_moisture_measured": 0.99,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 99%"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 143
+    },
+    {
+      "date": "2025-03-24",
+      "weather": {
+        "temp_max_c": 27.6,
+        "temp_min_c": 16.2,
+        "rain_mm": 0.0,
+        "humidity_pct": 53.0,
+        "et0_mm": 6.17
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 144
+    },
+    {
+      "date": "2025-03-25",
+      "weather": {
+        "temp_max_c": 26.8,
+        "temp_min_c": 15.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 58.0,
+        "et0_mm": 5.77
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 145
+    },
+    {
+      "date": "2025-03-26",
+      "weather": {
+        "temp_max_c": 27.8,
+        "temp_min_c": 15.1,
+        "rain_mm": 0.0,
+        "humidity_pct": 61.0,
+        "et0_mm": 5.64
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 146
+    },
+    {
+      "date": "2025-03-27",
+      "weather": {
+        "temp_max_c": 26.8,
+        "temp_min_c": 16.0,
+        "rain_mm": 0.0,
+        "humidity_pct": 59.0,
+        "et0_mm": 5.95
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 147
+    },
+    {
+      "date": "2025-03-28",
+      "weather": {
+        "temp_max_c": 26.0,
+        "temp_min_c": 14.7,
+        "rain_mm": 0.0,
+        "humidity_pct": 64.0,
+        "et0_mm": 4.53
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 148
+    },
+    {
+      "date": "2025-03-29",
+      "weather": {
+        "temp_max_c": 26.9,
+        "temp_min_c": 15.6,
+        "rain_mm": 0.6,
+        "humidity_pct": 67.0,
+        "et0_mm": 4.89
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 149
+    },
+    {
+      "date": "2025-03-30",
+      "weather": {
+        "temp_max_c": 27.7,
+        "temp_min_c": 16.0,
+        "rain_mm": 0.2,
+        "humidity_pct": 65.0,
+        "et0_mm": 4.85
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 150
+    },
+    {
+      "date": "2025-03-31",
+      "weather": {
+        "temp_max_c": 28.8,
+        "temp_min_c": 17.3,
+        "rain_mm": 0.0,
+        "humidity_pct": 64.0,
+        "et0_mm": 5.35
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 25593.8,
+      "observations": [
+        "Irrigated 25594L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 151
+    },
+    {
+      "date": "2025-04-01",
+      "weather": {
+        "temp_max_c": 28.1,
+        "temp_min_c": 16.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 66.0,
+        "et0_mm": 4.95
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 36239.9,
+      "observations": [
+        "Irrigated 36240L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 152
+    },
+    {
+      "date": "2025-04-02",
+      "weather": {
+        "temp_max_c": 28.9,
+        "temp_min_c": 16.7,
+        "rain_mm": 0.0,
+        "humidity_pct": 61.0,
+        "et0_mm": 5.34
+      },
+      "soil_moisture_measured": 0.92,
+      "irrigation_applied_liters": 36239.9,
+      "observations": [
+        "Irrigated 36240L",
+        "Soil moisture check: 92%"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 153
+    },
+    {
+      "date": "2025-04-03",
+      "weather": {
+        "temp_max_c": 26.9,
+        "temp_min_c": 17.7,
+        "rain_mm": 0.0,
+        "humidity_pct": 61.0,
+        "et0_mm": 5.71
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 154
+    },
+    {
+      "date": "2025-04-04",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 16.4,
+        "rain_mm": 0.9,
+        "humidity_pct": 76.0,
+        "et0_mm": 3.84
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 36239.9,
+      "observations": [
+        "Irrigated 36240L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 155
+    },
+    {
+      "date": "2025-04-05",
+      "weather": {
+        "temp_max_c": 26.9,
+        "temp_min_c": 15.4,
+        "rain_mm": 0.0,
+        "humidity_pct": 68.0,
+        "et0_mm": 4.36
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 45982.7,
+      "observations": [
+        "Irrigated 45983L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 156
+    },
+    {
+      "date": "2025-04-06",
+      "weather": {
+        "temp_max_c": 28.2,
+        "temp_min_c": 15.7,
+        "rain_mm": 0.0,
+        "humidity_pct": 64.0,
+        "et0_mm": 4.91
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 45982.7,
+      "observations": [
+        "Irrigated 45983L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 157
+    },
+    {
+      "date": "2025-04-07",
+      "weather": {
+        "temp_max_c": 28.2,
+        "temp_min_c": 16.5,
+        "rain_mm": 0.0,
+        "humidity_pct": 61.0,
+        "et0_mm": 4.7
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 45982.7,
+      "observations": [
+        "Irrigated 45983L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 158
+    },
+    {
+      "date": "2025-04-08",
+      "weather": {
+        "temp_max_c": 29.7,
+        "temp_min_c": 17.1,
+        "rain_mm": 0.0,
+        "humidity_pct": 59.0,
+        "et0_mm": 4.98
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 159
+    },
+    {
+      "date": "2025-04-09",
+      "weather": {
+        "temp_max_c": 29.0,
+        "temp_min_c": 18.1,
+        "rain_mm": 8.8,
+        "humidity_pct": 70.0,
+        "et0_mm": 4.02
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 160
+    },
+    {
+      "date": "2025-04-10",
+      "weather": {
+        "temp_max_c": 25.6,
+        "temp_min_c": 17.8,
+        "rain_mm": 13.4,
+        "humidity_pct": 85.0,
+        "et0_mm": 3.08
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Waterlogging concern"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 161
+    },
+    {
+      "date": "2025-04-11",
+      "weather": {
+        "temp_max_c": 23.6,
+        "temp_min_c": 15.6,
+        "rain_mm": 0.0,
+        "humidity_pct": 79.0,
+        "et0_mm": 3.76
+      },
+      "soil_moisture_measured": 0.966,
+      "irrigation_applied_liters": 0.0,
+      "observations": [
+        "Soil moisture check: 97%"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 162
+    },
+    {
+      "date": "2025-04-12",
+      "weather": {
+        "temp_max_c": 22.5,
+        "temp_min_c": 13.9,
+        "rain_mm": 0.0,
+        "humidity_pct": 76.0,
+        "et0_mm": 3.9
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 163
+    },
+    {
+      "date": "2025-04-13",
+      "weather": {
+        "temp_max_c": 25.0,
+        "temp_min_c": 12.9,
+        "rain_mm": 0.0,
+        "humidity_pct": 69.0,
+        "et0_mm": 4.67
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 45982.7,
+      "observations": [
+        "Irrigated 45983L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 164
+    },
+    {
+      "date": "2025-04-14",
+      "weather": {
+        "temp_max_c": 26.1,
+        "temp_min_c": 13.8,
+        "rain_mm": 0.0,
+        "humidity_pct": 61.0,
+        "et0_mm": 4.66
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 45982.7,
+      "observations": [
+        "Irrigated 45983L"
+      ],
+      "crop_stage": "maturity",
+      "growth_day": 165
+    },
+    {
+      "date": "2025-04-15",
+      "weather": {
+        "temp_max_c": 26.9,
+        "temp_min_c": 16.6,
+        "rain_mm": 3.2,
+        "humidity_pct": 67.0,
+        "et0_mm": 4.15
+      },
+      "soil_moisture_measured": null,
+      "irrigation_applied_liters": 0.0,
+      "observations": [],
+      "crop_stage": "maturity",
+      "growth_day": 166
+    }
+  ]
+}
