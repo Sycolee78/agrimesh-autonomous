@@ -15,6 +15,8 @@ class PlotState:
     soil_type: str = "loam"
     aez_zone: str = "III"
     last_irrigation_at: Optional[datetime] = None
+    day_of_season: int = 30  # Days since planting (for growth stage tracking)
+    cumulative_stress_days: int = 0  # Accumulated days below critical moisture
 
 
 @dataclass
