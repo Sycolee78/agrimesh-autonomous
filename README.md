@@ -14,7 +14,30 @@ This project now explicitly follows an integrated crop-livestock operating model
   - Seasonal modes: wet-season vs dry-season priorities and constraints.
 - Welfare + biosecurity + water-security are hard constraints, not optional optimizations.
 
-## Phase 1 Goal (Simulation MVP)
+## Project Status
+
+### ✅ Phase 1: Complete
+- Simulation MVP with Irrigation Agent + Yield Forecast Agent
+- Multi-agent orchestrator with specialized agents
+- AEZ-aware crop policies for Zimbabwe zones I-V
+- Streamlit frontend with map visualization
+
+### ✅ Phase 2: Complete (Feb 2026)
+- **Non-linear yield model** — Crop-specific optimal moisture ranges
+- **Real weather integration** — Open-Meteo API with Zimbabwe locations
+- **Hardware interface specs** — Sensor/actuator protocols for IoT
+- **LLM reasoning agent** — Decision explanations via Ollama/OpenAI/Claude
+- **Pilot validation** — 12 scenarios, 96.2% avg water savings
+
+### Key Results
+| Metric | Result |
+|--------|--------|
+| Avg Water Savings | 96.2% |
+| Avg Yield Impact | -2.5% |
+| Best Case | +5.4% yield (Bulawayo) |
+| Locations Tested | 4 (Harare, Bulawayo, Mutare, Masvingo) |
+
+## Phase 1 Original Goals
 Within 6 months, deliver:
 - Simulated farm environment
 - 2 working agents:
@@ -135,21 +158,63 @@ python -m src.sim.benchmark
 - Failure-rate under weather variability
 - Welfare/biosecurity incident response latency
 
-## Frontend Simulation UI (new)
-- Built with Streamlit (`frontend/app.py`)
-- Lets you simulate multi-day operations with controls for:
-  - season mode
-  - daily water budget
-  - weather baseline + variability
-- Added requested features:
-  - per-plot cards + map/scatter view
-  - manual approvals for `HUMAN_APPROVAL` actions
-  - scenario save/load via JSON presets
-- Displays:
-  - KPI trends (yield proxy, WUE)
-  - resource/condition curves (water, tank level, rain, temperature)
-  - latest orchestrator action queue
-  - generated alerts
+## Frontend Application (Streamlit)
+
+The AgriMesh frontend is a comprehensive Streamlit application with 7 pages:
+
+### 🏠 Home - Daily Simulation
+- Multi-day farm simulation with orchestrator
+- Season mode (wet/dry) and weather controls
+- Per-plot cards with soil moisture visualization
+- Manual approval workflow for high-risk actions
+- KPI trends and resource curves
+
+### 🗺️ Farm Planner
+- Interactive Zimbabwe map with AEZ overlays
+- Click anywhere for instant farm recommendations
+- AEZ zone detection and crop suitability
+- Quick-select major cities
+
+### 🎯 Strategic Planner
+- Complete AEZ-aware farm planning
+- 19 enterprise options (crops, livestock, CEA)
+- Capital tier classification (A/B/C budgets)
+- Monte Carlo profit projections
+- Spatial layout generation
+- Risk assessment and energy planning
+
+### 🌦️ Weather Analysis
+- Real Zimbabwe weather data (Open-Meteo API)
+- Historical data visualization (1940-present)
+- 16-day forecasting
+- Multi-location comparison
+- Growing season analysis by AEZ
+
+### 📈 Optimization
+- Pareto frontier visualization (water vs yield)
+- Interactive parameter tuning
+- Recommendation by preference (balanced/water-saver/yield-max)
+- Non-linear yield model exploration
+- Downloadable configurations
+
+### ✅ Validation
+- Counterfactual analysis UI
+- Pilot farm data generation
+- Traditional vs agent comparison charts
+- Weather-aware decision analysis
+- Implementation recommendations
+
+### 🤖 AI Advisor
+- LLM-powered decision explanations
+- Daily summary generation
+- Farmer Q&A interface
+- Learning mode with agricultural topics
+- Supports Ollama (local), OpenAI, and Anthropic backends
+
+### Quick Start
+```bash
+./run.sh  # Creates venv, installs deps, launches at http://localhost:8501
+```
 
 ## AEZ-Aware Farm Allocator (NEW)
 
