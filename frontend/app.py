@@ -14,7 +14,111 @@ from src.orchestration import AgentContext, FarmManagementOrchestrator
 from src.sim.environment import FarmSimulator
 
 
-st.set_page_config(page_title="AgriMesh Simulator", page_icon="🌾", layout="wide")
+st.set_page_config(
+    page_title="AgriMesh Autonomous Farm OS",
+    page_icon="🌾",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# ============================================================================
+# HOME PAGE OVERVIEW
+# ============================================================================
+
+st.title("🌾 AgriMesh Autonomous")
+st.caption("Agent-driven Farm OS for Zimbabwe — Smart Irrigation & Yield Optimization")
+
+# Show overview on first visit or when toggled
+if "show_overview" not in st.session_state:
+    st.session_state["show_overview"] = True
+
+with st.expander("📖 **Project Overview** — What AgriMesh Does", expanded=st.session_state["show_overview"]):
+    st.session_state["show_overview"] = False  # Collapse after first view
+    
+    st.markdown("""
+    ### 🎯 Mission
+    **AgriMesh Autonomous** is an intelligent farm management system designed for Zimbabwe's 
+    diverse agro-ecological zones. It uses AI agents to make daily irrigation decisions, 
+    optimizing for both **water savings** and **crop yield**.
+    
+    ---
+    
+    ### ✅ What's Working (Phase 2 Complete)
+    """)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        **🌱 Smart Irrigation Agent**
+        - Non-linear yield model (optimal moisture ranges)
+        - Growth-stage-aware decisions
+        - AEZ-specific crop policies
+        
+        **🌦️ Real Weather Integration**
+        - Open-Meteo API for Zimbabwe
+        - Historical data (1940-present)
+        - 16-day forecasting
+        
+        **📊 Multi-Objective Optimization**
+        - Pareto frontier analysis
+        - Water vs yield trade-off curves
+        - Configurable preferences
+        """)
+    
+    with col2:
+        st.markdown("""
+        **🤖 LLM Reasoning Agent**
+        - Decision explanations in plain language
+        - Daily/weekly summaries
+        - Farmer Q&A
+        
+        **✅ Pilot Validation**
+        - Counterfactual analysis
+        - 12 scenarios validated
+        - 96% avg water savings
+        
+        **🗺️ Strategic Farm Planner**
+        - AEZ-aware enterprise selection
+        - Profit projections
+        - Spatial layout planning
+        """)
+    
+    st.markdown("---")
+    
+    st.markdown("""
+    ### 📈 Key Results
+    """)
+    
+    result_cols = st.columns(4)
+    with result_cols[0]:
+        st.metric("Avg Water Savings", "96.2%", help="Across 12 pilot scenarios")
+    with result_cols[1]:
+        st.metric("Yield Impact", "-2.5%", help="Minimal trade-off for massive water savings")
+    with result_cols[2]:
+        st.metric("Best Case", "+5.4% yield", help="Bulawayo with erratic traditional irrigation")
+    with result_cols[3]:
+        st.metric("Locations Tested", "4", help="Harare, Bulawayo, Mutare, Masvingo")
+    
+    st.markdown("---")
+    
+    st.markdown("""
+    ### 🧭 Navigate the App
+    
+    | Page | What It Does |
+    |------|-------------|
+    | **🏠 Home** (this page) | Run daily farm simulations with the orchestrator |
+    | **🗺️ Farm Planner** | Click Zimbabwe map for AEZ-based recommendations |
+    | **🎯 Strategic Planner** | Full farm planning with enterprise selection |
+    | **🌦️ Weather Analysis** | View real weather data for any Zimbabwe location |
+    | **📈 Optimization** | Explore Pareto frontier and tune parameters |
+    | **✅ Validation** | Run counterfactual analysis on pilot farms |
+    | **🤖 AI Advisor** | Ask questions, get explanations from the LLM agent |
+    """)
+    
+    st.info("👈 Use the **sidebar** to navigate between pages, or scroll down to run a simulation.")
+
+st.divider()
 
 
 def default_plot_catalog() -> List[Dict[str, Any]]:
@@ -132,8 +236,8 @@ def maybe_inject_demo_human_approval(orch: Dict[str, Any]) -> Dict[str, Any]:
     return orch
 
 
-st.title("🌾 AgriMesh Autonomous — Simulation Frontend")
-st.caption("Per-plot simulation, AEZ-aware orchestration, approval workflow, and scenario presets.")
+st.header("🔄 Daily Farm Simulation")
+st.caption("Run multi-day simulations with the orchestrator, AEZ-aware irrigation, and approval workflows.")
 
 
 def render_initial_map(scenario: Dict[str, Any]) -> None:
