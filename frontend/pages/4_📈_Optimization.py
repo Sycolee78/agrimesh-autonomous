@@ -20,7 +20,7 @@ import altair as alt
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from src.sim.pareto_tuning import run_pareto_tuning, recommend_config
-from src.sim.yield_model import CropYieldModel, CROP_PROFILES
+from src.sim.yield_model import CropWaterProfile, CROP_PROFILES, calculate_yield_factor
 
 st.set_page_config(
     page_title="Optimization - AgriMesh",
@@ -308,28 +308,32 @@ if "tuning_results" in st.session_state:
         with col1:
             st.markdown("#### Crop Parameters")
             st.json({
-                "optimal_moisture_low": profile.optimal_moisture_low,
-                "optimal_moisture_high": profile.optimal_moisture_high,
+                "optimal_moisture_min": profile.optimal_moisture_min,
+                "optimal_moisture_max": profile.optimal_moisture_max,
                 "wilting_point": profile.wilting_point,
-                "waterlogging_threshold": profile.waterlogging_threshold,
-                "base_yield_t_ha": profile.base_yield_t_ha,
-                "max_yield_t_ha": profile.max_yield_t_ha
+                "saturation_point": profile.saturation_point,
+                "max_yield_potential": profile.max_yield_potential,
+                "drought_sensitivity": profile.drought_sensitivity,
+                "waterlog_sensitivity": profile.waterlog_sensitivity
             })
         
         with col2:
-            st.markdown("#### Growth Stage Sensitivity")
-            st.json(profile.stage_sensitivity)
+            st.markdown("#### Growth Stage Demand")
+            stage_demand = {str(k.value): v for k, v in profile.stage_demand.items()}
+            st.json(stage_demand)
         
         # Generate yield curve
         st.markdown("#### Moisture → Yield Response")
         
-        model = CropYieldModel(crop)
         moisture_range = [i/100 for i in range(10, 95, 2)]
         
         yield_data = []
         for stage in ["vegetative", "flowering", "grain_fill", "maturity"]:
+            # Map stage days for calculate_yield_factor
+            stage_days = {"vegetative": 25, "flowering": 50, "grain_fill": 75, "maturity": 100}
+            day = stage_days.get(stage, 50)
             for m in moisture_range:
-                y = model.calculate_yield_factor(m, stage)
+                y = calculate_yield_factor(m, crop, day)
                 yield_data.append({
                     "moisture": m,
                     "yield_factor": y,
@@ -350,8 +354,8 @@ if "tuning_results" in st.session_state:
         
         # Add optimal zone
         optimal_zone = alt.Chart(pd.DataFrame({
-            "x": [profile.optimal_moisture_low],
-            "x2": [profile.optimal_moisture_high]
+            "x": [profile.optimal_moisture_min],
+            "x2": [profile.optimal_moisture_max]
         })).mark_rect(opacity=0.2, color="#2ecc71").encode(
             x="x:Q",
             x2="x2:Q"
@@ -359,7 +363,7 @@ if "tuning_results" in st.session_state:
         
         st.altair_chart(optimal_zone + yield_curve, use_container_width=True)
         
-        st.caption(f"Green shaded area = optimal moisture range ({profile.optimal_moisture_low:.0%} - {profile.optimal_moisture_high:.0%})")
+        st.caption(f"Green shaded area = optimal moisture range ({profile.optimal_moisture_min:.0%} - {profile.optimal_moisture_max:.0%})")
 
 # Instructions
 if "tuning_results" not in st.session_state:

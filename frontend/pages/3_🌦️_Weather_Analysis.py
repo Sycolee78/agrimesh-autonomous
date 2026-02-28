@@ -19,7 +19,7 @@ import altair as alt
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.data.weather_client import WeatherClient, ZIMBABWE_LOCATIONS
+from src.data.weather_client import OpenMeteoClient, ZIMBABWE_LOCATIONS
 
 st.set_page_config(
     page_title="Weather Analysis - AgriMesh",
@@ -33,7 +33,7 @@ st.caption("Real historical and forecast data from Open-Meteo API")
 # Initialize weather client
 @st.cache_resource
 def get_weather_client():
-    return WeatherClient()
+    return OpenMeteoClient()
 
 client = get_weather_client()
 
@@ -73,31 +73,53 @@ with col2:
 if st.sidebar.button("🔄 Fetch Weather Data", type="primary", use_container_width=True):
     with st.spinner(f"Fetching weather data for {location_name}..."):
         try:
+            from datetime import date as date_type
             data = client.get_historical(
-                lat=coords["lat"],
-                lon=coords["lon"],
-                start_date=start_date.strftime("%Y-%m-%d"),
-                end_date=end_date.strftime("%Y-%m-%d")
+                location=location_name.lower().replace(" ", "_"),
+                start_date=date_type(start_date.year, start_date.month, start_date.day),
+                end_date=date_type(end_date.year, end_date.month, end_date.day)
             )
-            st.session_state["weather_data"] = data
+            # Convert DailyWeather objects to dicts for display
+            data_dicts = [
+                {
+                    "date": d.date.isoformat(),
+                    "temperature_max_c": d.temperature_max_c,
+                    "temperature_min_c": d.temperature_min_c,
+                    "precipitation_mm": d.precipitation_mm,
+                    "relative_humidity_pct": d.humidity_mean_pct,
+                }
+                for d in data
+            ]
+            st.session_state["weather_data"] = data_dicts
             st.session_state["weather_location"] = location_name
             st.success(f"✅ Loaded {len(data)} days of weather data")
         except Exception as e:
             st.error(f"Failed to fetch weather data: {e}")
+            import traceback
+            st.code(traceback.format_exc())
 
 # Also fetch forecast
 if st.sidebar.button("📡 Get 16-Day Forecast", use_container_width=True):
     with st.spinner(f"Fetching forecast for {location_name}..."):
         try:
-            forecast = client.get_forecast(
-                lat=coords["lat"],
-                lon=coords["lon"]
-            )
-            st.session_state["forecast_data"] = forecast
+            forecast = client.get_forecast(location=location_name.lower().replace(" ", "_"))
+            # Convert to dicts for display
+            forecast_dicts = [
+                {
+                    "date": d.date.isoformat(),
+                    "temperature_max_c": d.temperature_max_c,
+                    "temperature_min_c": d.temperature_min_c,
+                    "precipitation_mm": d.precipitation_mm,
+                }
+                for d in forecast.daily
+            ]
+            st.session_state["forecast_data"] = forecast_dicts
             st.session_state["forecast_location"] = location_name
-            st.success(f"✅ Loaded {len(forecast)} day forecast")
+            st.success(f"✅ Loaded {len(forecast_dicts)} day forecast")
         except Exception as e:
             st.error(f"Failed to fetch forecast: {e}")
+            import traceback
+            st.code(traceback.format_exc())
 
 # Display data
 if "weather_data" in st.session_state and st.session_state["weather_data"]:
@@ -278,28 +300,30 @@ st.markdown("""
 # Quick location comparison
 st.subheader("📍 Quick Location Comparison")
 if st.button("Compare All Locations (2024/25 Season)"):
+    from datetime import date as date_type
     comparison_data = []
     progress = st.progress(0)
     
     for i, (loc_name, loc_coords) in enumerate(ZIMBABWE_LOCATIONS.items()):
         try:
             data = client.get_historical(
-                lat=loc_coords["lat"],
-                lon=loc_coords["lon"],
-                start_date="2024-11-01",
-                end_date="2025-03-31"
+                location=loc_name,
+                start_date=date_type(2024, 11, 1),
+                end_date=date_type(2025, 3, 31)
             )
-            total_rain = sum(d["precipitation_mm"] for d in data)
-            avg_temp = sum(d["temperature_max_c"] for d in data) / len(data)
+            total_rain = sum(d.precipitation_mm for d in data)
+            avg_temp = sum(d.temperature_max_c for d in data) / len(data)
             comparison_data.append({
-                "Location": loc_name,
+                "Location": loc_name.title(),
+                "AEZ Zone": loc_coords.get("aez", "N/A"),
                 "Total Rainfall (mm)": round(total_rain, 0),
                 "Avg Max Temp (°C)": round(avg_temp, 1),
-                "Rainy Days": sum(1 for d in data if d["precipitation_mm"] > 1)
+                "Rainy Days": sum(1 for d in data if d.precipitation_mm > 1)
             })
         except Exception as e:
             comparison_data.append({
-                "Location": loc_name,
+                "Location": loc_name.title(),
+                "AEZ Zone": loc_coords.get("aez", "N/A"),
                 "Total Rainfall (mm)": "Error",
                 "Avg Max Temp (°C)": "Error",
                 "Rainy Days": "Error"
