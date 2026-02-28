@@ -211,10 +211,34 @@ The AgriMesh frontend is a comprehensive Streamlit application with 7 pages:
 - Learning mode with agricultural topics
 - Supports Ollama (local), OpenAI, and Anthropic backends
 
-### Quick Start
+### Quick Start (Streamlit)
 ```bash
 ./run.sh  # Creates venv, installs deps, launches at http://localhost:8501
 ```
+
+## React/Next.js Web Frontend (NEW)
+
+A modern React frontend with interactive OpenStreetMap integration.
+
+### Features
+- 🗺️ **Interactive Map**: Click anywhere in Zimbabwe to plan a farm
+- 🌾 **Farm Configuration**: Livestock, crops, buildings with visual feedback
+- 📊 **Live Simulation**: Sustainability scoring, profit estimates, synergies
+- 📈 **Results Dashboard**: Charts, metrics, improvement suggestions
+- 💾 **Export**: Download farm plans as JSON
+
+### Tech Stack
+Next.js 14 • TypeScript • Tailwind CSS • Leaflet • Zustand • Recharts
+
+### Quick Start (React)
+```bash
+cd web-frontend
+npm install
+npm run dev
+# Open http://localhost:3000
+```
+
+See [web-frontend/README.md](web-frontend/README.md) for full documentation.
 
 ## AEZ-Aware Farm Allocator (NEW)
 
