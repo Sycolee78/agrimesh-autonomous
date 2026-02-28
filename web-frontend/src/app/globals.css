@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet overrides for proper rendering */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply rounded-lg shadow-lg;
+}
+
+.leaflet-popup-content {
+  @apply m-0 p-0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded hover:bg-gray-400;
+}
+
+/* Farm zone colors */
+.zone-crops {
+  fill: rgba(34, 197, 94, 0.3);
+  stroke: #16a34a;
+  stroke-width: 2;
+}
+
+.zone-livestock {
+  fill: rgba(234, 179, 8, 0.3);
+  stroke: #ca8a04;
+  stroke-width: 2;
+}
+
+.zone-buildings {
+  fill: rgba(100, 116, 139, 0.3);
+  stroke: #475569;
+  stroke-width: 2;
+}
+
+/* Dashboard cards */
+.dashboard-card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-4 transition-shadow hover:shadow-md;
+}
+
+/* Sustainability score gradient */
+.sustainability-excellent {
+  @apply bg-gradient-to-r from-green-500 to-emerald-500;
+}
+
+.sustainability-good {
+  @apply bg-gradient-to-r from-lime-500 to-green-500;
+}
+
+.sustainability-moderate {
+  @apply bg-gradient-to-r from-yellow-500 to-lime-500;
+}
+
+.sustainability-poor {
+  @apply bg-gradient-to-r from-orange-500 to-yellow-500;
+}
+
+/* Animation utilities */
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
+}
