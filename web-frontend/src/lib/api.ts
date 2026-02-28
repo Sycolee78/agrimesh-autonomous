@@ -1,9 +1,8 @@
 /**
  * AgriMesh API Service
  * 
- * Handles communication with the backend simulation engine.
- * Currently includes mock data for development; will connect to
- * the Python backend API in production.
+ * Connects to the FastAPI backend for simulation.
+ * Falls back to mock data if backend is unavailable.
  */
 
 import type {
@@ -12,13 +11,7 @@ import type {
   SimulationResult,
   AEZZone,
   WeatherData,
-  SoilData,
   CropSuitability,
-  LivestockAnalysis,
-  SustainabilityMetrics,
-  ProfitEstimate,
-  ResourceRequirements,
-  CropType,
 } from "@/types/farm";
 
 // ============================================================================
@@ -28,7 +21,84 @@ import type {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 // ============================================================================
-// Zimbabwe AEZ Data (embedded for offline use)
+// API Client
+// ============================================================================
+
+class ApiClient {
+  private baseUrl: string;
+  private useBackend: boolean = true;
+
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
+
+  private async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    const url = `${this.baseUrl}${endpoint}`;
+    
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          ...options?.headers,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      console.warn(`API call failed: ${endpoint}`, error);
+      this.useBackend = false;
+      throw error;
+    }
+  }
+
+  async checkHealth(): Promise<boolean> {
+    try {
+      await this.fetch("/");
+      this.useBackend = true;
+      return true;
+    } catch {
+      this.useBackend = false;
+      return false;
+    }
+  }
+
+  async getAEZZone(lat: number, lng: number): Promise<AEZZone> {
+    return this.fetch(`/api/aez/${lat}/${lng}`);
+  }
+
+  async getWeather(lat: number, lng: number): Promise<WeatherData> {
+    return this.fetch(`/api/weather/${lat}/${lng}`);
+  }
+
+  async getCropSuitability(lat: number, lng: number): Promise<CropSuitability[]> {
+    return this.fetch(`/api/crops/suitability/${lat}/${lng}`);
+  }
+
+  async simulate(farm: FarmConfig): Promise<SimulationResult> {
+    return this.fetch("/api/simulate", {
+      method: "POST",
+      body: JSON.stringify(farm),
+    });
+  }
+
+  async getLocations(): Promise<Record<string, { lat: number; lng: number; aez: string }>> {
+    return this.fetch("/api/locations");
+  }
+
+  isBackendAvailable(): boolean {
+    return this.useBackend;
+  }
+}
+
+export const apiClient = new ApiClient(API_BASE_URL);
+
+// ============================================================================
+// Zimbabwe AEZ Data (fallback for offline use)
 // ============================================================================
 
 export const ZIMBABWE_AEZ_ZONES: Record<string, AEZZone> = {
@@ -83,217 +153,137 @@ export const ZIMBABWE_AEZ_ZONES: Record<string, AEZZone> = {
 };
 
 // ============================================================================
-// AEZ Lookup (uses lat/lon to approximate zone)
+// Fallback AEZ Lookup (used when API unavailable)
 // ============================================================================
 
 export function lookupAEZZone(lat: number, lng: number): AEZZone {
-  // Simplified Zimbabwe AEZ lookup based on latitude and longitude
-  // In production, this would use proper geospatial boundaries
-  
-  if (lat > -18 && lng > 30) {
-    return ZIMBABWE_AEZ_ZONES.I; // Eastern Highlands
-  } else if (lat > -18.5 && lat < -17) {
-    return ZIMBABWE_AEZ_ZONES.IIa; // Mashonaland
-  } else if (lat >= -18.5 && lat < -19.5 && lng > 29) {
+  if (lat > -18 && lng > 31) {
+    return ZIMBABWE_AEZ_ZONES.I;
+  } else if (lat > -18.5) {
+    return ZIMBABWE_AEZ_ZONES.IIa;
+  } else if (lat > -19.5 && lng > 29) {
     return ZIMBABWE_AEZ_ZONES.IIb;
-  } else if (lat >= -19.5 && lat < -20.5) {
-    return ZIMBABWE_AEZ_ZONES.III; // Midlands
-  } else if (lat >= -20.5 || lng < 28) {
-    if (lng < 27) {
-      return ZIMBABWE_AEZ_ZONES.V; // Victoria Falls area
-    }
-    return ZIMBABWE_AEZ_ZONES.IV; // Matabeleland
+  } else if (lat > -20.5) {
+    return ZIMBABWE_AEZ_ZONES.III;
+  } else if (lng < 27) {
+    return ZIMBABWE_AEZ_ZONES.V;
   }
-  
-  return ZIMBABWE_AEZ_ZONES.III; // Default
+  return ZIMBABWE_AEZ_ZONES.IV;
 }
 
 // ============================================================================
-// Mock Weather Data Generator
+// Mock Simulation (fallback when API unavailable)
 // ============================================================================
 
-function generateWeatherData(aez: AEZZone): WeatherData {
+import type {
+  SoilData,
+  LivestockAnalysis,
+  SustainabilityMetrics,
+  ProfitEstimate,
+  ResourceRequirements,
+  CropType,
+} from "@/types/farm";
+
+function generateMockWeather(aez: AEZZone): WeatherData {
   const rainfallBase: Record<string, number> = {
-    I: 1100,
-    IIa: 900,
-    IIb: 780,
-    III: 700,
-    IV: 550,
-    V: 400,
+    I: 1100, IIa: 900, IIb: 780, III: 700, IV: 550, V: 400,
   };
-  
-  const rainfall = rainfallBase[aez.id] + (Math.random() - 0.5) * 100;
+  const rainfall = rainfallBase[aez.id] || 700;
   
   return {
-    annualRainfallMm: Math.round(rainfall),
-    avgTempC: 22 + (Math.random() - 0.5) * 4,
+    annualRainfallMm: rainfall,
+    avgTempC: 24,
     rainyDays: Math.round(rainfall / 8),
     droughtRisk: rainfall < 500 ? "high" : rainfall < 700 ? "medium" : "low",
-    frostRisk: aez.id === "I", // Eastern highlands have frost risk
+    frostRisk: aez.id === "I",
   };
 }
 
-// ============================================================================
-// Mock Soil Data Generator
-// ============================================================================
-
-function generateSoilData(aez: AEZZone): SoilData {
+function generateMockSoil(aez: AEZZone): SoilData {
   const soilTypes: Record<string, string> = {
-    I: "Red clay loam",
-    IIa: "Sandy loam",
-    IIb: "Sandy clay loam",
-    III: "Sandy loam",
-    IV: "Sandy soil",
-    V: "Kalahari sand",
+    I: "Red clay loam", IIa: "Sandy loam", IIb: "Sandy clay loam",
+    III: "Sandy loam", IV: "Sandy soil", V: "Kalahari sand",
   };
   
   return {
     type: soilTypes[aez.id] || "Loam",
-    ph: 5.5 + Math.random() * 1.5,
-    organicMatter: aez.id === "I" || aez.id === "IIa" ? "high" : aez.id === "V" ? "low" : "medium",
-    drainage: aez.id === "I" ? "moderate" : "good",
+    ph: 5.8,
+    organicMatter: ["I", "IIa"].includes(aez.id) ? "high" : aez.id === "V" ? "low" : "medium",
+    drainage: "good",
   };
 }
 
-// ============================================================================
-// Crop Suitability Calculator
-// ============================================================================
-
-const CROP_BASE_YIELDS: Record<CropType, number> = {
-  maize: 5.5,
-  sorghum: 3.5,
-  groundnuts: 2.0,
-  wheat: 4.5,
-  vegetables: 15.0,
-  tobacco: 2.5,
-  cotton: 3.0,
-  fodder: 8.0,
-  potatoes: 25.0,
+const CROP_BASE_YIELDS: Record<string, number> = {
+  maize: 5.5, sorghum: 3.5, groundnuts: 2.0, wheat: 4.5,
+  vegetables: 15.0, tobacco: 2.5, cotton: 3.0, fodder: 8.0, potatoes: 25.0,
 };
 
-const CROP_PRICES_USD: Record<CropType, number> = {
-  maize: 250,
-  sorghum: 200,
-  groundnuts: 800,
-  wheat: 300,
-  vegetables: 500,
-  tobacco: 4500,
-  cotton: 1200,
-  fodder: 100,
-  potatoes: 300,
+const CROP_PRICES: Record<string, number> = {
+  maize: 250, sorghum: 200, groundnuts: 800, wheat: 300,
+  vegetables: 500, tobacco: 4500, cotton: 1200, fodder: 100, potatoes: 300,
 };
 
-function calculateCropSuitability(
-  crop: CropType,
+function calculateMockCropSuitability(
+  crop: string,
   aez: AEZZone,
   weather: WeatherData
 ): CropSuitability {
   const isSuitable = aez.suitableCrops.includes(crop);
-  const baseScore = isSuitable ? 70 : 30;
+  let score = isSuitable ? 75 : 35;
   
-  // Weather modifiers
-  let weatherModifier = 0;
-  if (weather.droughtRisk === "low") weatherModifier += 15;
-  else if (weather.droughtRisk === "high") weatherModifier -= 20;
+  if (weather.droughtRisk === "low") score += 10;
+  else if (weather.droughtRisk === "high") score -= 15;
   
-  // Crop-specific modifiers
-  let cropModifier = 0;
-  if (crop === "sorghum" && weather.droughtRisk !== "low") cropModifier += 10;
-  if (crop === "vegetables" && weather.annualRainfallMm > 800) cropModifier += 10;
-  if (crop === "tobacco" && aez.id === "IIa") cropModifier += 15;
-  
-  const suitabilityScore = Math.min(100, Math.max(0, baseScore + weatherModifier + cropModifier));
-  const yieldMultiplier = suitabilityScore / 80;
-  const expectedYield = CROP_BASE_YIELDS[crop] * yieldMultiplier;
-  
-  const risks: string[] = [];
-  if (weather.droughtRisk === "high") risks.push("High drought risk");
-  if (weather.frostRisk && ["vegetables", "potatoes"].includes(crop)) risks.push("Frost damage possible");
-  if (!isSuitable) risks.push("Not traditionally grown in this zone");
+  score = Math.max(0, Math.min(100, score));
+  const baseYield = CROP_BASE_YIELDS[crop] || 3;
+  const expectedYield = baseYield * (score / 80);
   
   return {
-    crop,
-    suitabilityScore,
+    crop: crop as CropType,
+    suitabilityScore: score,
     expectedYieldTHa: Math.round(expectedYield * 10) / 10,
-    waterRequirementMm: Math.round(400 + (100 - suitabilityScore) * 3),
-    profitPotentialUsd: Math.round(expectedYield * CROP_PRICES_USD[crop]),
-    risks,
+    waterRequirementMm: Math.round(400 + (100 - score) * 3),
+    profitPotentialUsd: Math.round(expectedYield * (CROP_PRICES[crop] || 300)),
+    risks: isSuitable ? [] : ["Not traditionally grown in this zone"],
   };
 }
 
-// ============================================================================
-// Livestock Analysis Calculator
-// ============================================================================
-
-const LIVESTOCK_REVENUE: Record<string, number> = {
-  chickens: 15, // per bird per year
-  cows: 800, // per head per year (milk + calves)
-  goats: 150,
-  sheep: 120,
-  pigs: 200,
-};
-
-const LIVESTOCK_FEED_KG: Record<string, number> = {
-  chickens: 0.12, // per day
-  cows: 12,
-  goats: 2,
-  sheep: 1.5,
-  pigs: 3,
-};
-
-const LIVESTOCK_WATER_L: Record<string, number> = {
-  chickens: 0.25, // per day
-  cows: 50,
-  goats: 5,
-  sheep: 4,
-  pigs: 8,
-};
-
-function calculateLivestockAnalysis(
-  type: keyof typeof LIVESTOCK_REVENUE,
-  count: number
-): LivestockAnalysis {
+function calculateMockLivestock(type: string, count: number): LivestockAnalysis {
+  const feed = { chickens: 0.12, cows: 12, goats: 2, sheep: 1.5, pigs: 3 };
+  const water = { chickens: 0.25, cows: 50, goats: 5, sheep: 4, pigs: 8 };
+  const revenue = { chickens: 15, cows: 800, goats: 150, sheep: 120, pigs: 200 };
+  
   return {
-    type,
+    type: type as keyof typeof feed,
     count,
-    feedRequirementKg: Math.round(count * LIVESTOCK_FEED_KG[type] * 365),
-    waterRequirementL: Math.round(count * LIVESTOCK_WATER_L[type] * 365),
-    manureOutputKg: Math.round(count * LIVESTOCK_FEED_KG[type] * 365 * 0.4), // ~40% conversion
-    estimatedRevenueUsd: Math.round(count * LIVESTOCK_REVENUE[type]),
+    feedRequirementKg: Math.round(count * (feed[type as keyof typeof feed] || 1) * 365),
+    waterRequirementL: Math.round(count * (water[type as keyof typeof water] || 5) * 365),
+    manureOutputKg: Math.round(count * (feed[type as keyof typeof feed] || 1) * 365 * 0.4),
+    estimatedRevenueUsd: Math.round(count * (revenue[type as keyof typeof revenue] || 100)),
   };
 }
 
-// ============================================================================
-// Sustainability Calculator
-// ============================================================================
-
-function calculateSustainability(
+function calculateMockSustainability(
   farm: FarmConfig,
-  cropResults: CropSuitability[],
   livestockResults: LivestockAnalysis[]
 ): SustainabilityMetrics {
   const synergies: SustainabilityMetrics["synergies"] = [];
-  let bonusScore = 0;
+  let bonus = 0;
   
-  // Manure → fertilizer synergy
-  const totalManure = livestockResults.reduce((sum, l) => sum + l.manureOutputKg, 0);
-  const totalCropArea = farm.crops.reduce((sum, c) => sum + c.areaHa, 0);
+  const totalManure = livestockResults.reduce((s, l) => s + l.manureOutputKg, 0);
+  const totalCropArea = farm.crops.reduce((s, c) => s + c.areaHa, 0);
   
-  if (totalManure > 0 && totalCropArea > 0) {
-    const manurePerHa = totalManure / totalCropArea;
-    if (manurePerHa > 1000) {
-      synergies.push({
-        source: "Livestock manure",
-        target: "Crop fertilization",
-        benefit: "Reduces fertilizer costs by 40%",
-        impactPercent: 40,
-      });
-      bonusScore += 15;
-    }
+  if (totalManure > 1000 && totalCropArea > 0) {
+    synergies.push({
+      source: "Livestock manure",
+      target: "Crop fertilization",
+      benefit: "Reduces fertilizer costs by 40%",
+      impactPercent: 40,
+    });
+    bonus += 15;
   }
   
-  // Crop residue → feed synergy
-  if (farm.crops.some((c) => ["maize", "sorghum", "fodder"].includes(c.type))) {
+  if (farm.crops.some(c => ["maize", "sorghum", "fodder"].includes(c.type))) {
     if (farm.livestock.cows > 0 || farm.livestock.goats > 0) {
       synergies.push({
         source: "Crop residues",
@@ -301,11 +291,10 @@ function calculateSustainability(
         benefit: "Reduces feed costs by 25%",
         impactPercent: 25,
       });
-      bonusScore += 10;
+      bonus += 10;
     }
   }
   
-  // Chickens → pest control
   if (farm.livestock.chickens > 50 && totalCropArea > 0) {
     synergies.push({
       source: "Free-range chickens",
@@ -313,71 +302,50 @@ function calculateSustainability(
       benefit: "Reduces pesticide needs by 30%",
       impactPercent: 30,
     });
-    bonusScore += 8;
+    bonus += 8;
   }
   
-  // Groundnuts → nitrogen fixation
-  if (farm.crops.some((c) => c.type === "groundnuts")) {
+  if (farm.crops.some(c => c.type === "groundnuts")) {
     synergies.push({
       source: "Groundnuts (legume)",
       target: "Soil nitrogen",
       benefit: "Adds 40-60 kg N/ha to soil",
       impactPercent: 20,
     });
-    bonusScore += 12;
+    bonus += 12;
   }
   
-  // Base scores
-  const diversityScore = Math.min(100, farm.crops.length * 15 + Object.values(farm.livestock).filter((v) => v > 0).length * 10);
-  const waterScore = farm.crops.filter((c) => c.irrigated).length > 0 ? 70 : 85;
+  const diversity = farm.crops.length * 15 + 
+    Object.values(farm.livestock).filter(v => v > 0).length * 10;
   
   const suggestions: string[] = [];
-  if (totalManure < totalCropArea * 500) {
-    suggestions.push("Consider adding more livestock for manure production");
-  }
-  if (!farm.crops.some((c) => c.type === "groundnuts")) {
-    suggestions.push("Add groundnuts for nitrogen fixation benefits");
-  }
-  if (farm.buildings.filter((b) => b.type === "water_tank").length === 0) {
-    suggestions.push("Install rainwater harvesting tanks");
-  }
-  if (farm.crops.filter((c) => c.irrigated).length === 0 && farm.areaHa > 2) {
-    suggestions.push("Consider drip irrigation for vegetable plots");
-  }
-  
-  const overallScore = Math.min(100, Math.round(
-    (diversityScore * 0.3 + waterScore * 0.2 + 60 * 0.3 + bonusScore * 0.2)
-  ));
+  if (totalManure < totalCropArea * 500) suggestions.push("Add more livestock for manure");
+  if (!farm.crops.some(c => c.type === "groundnuts")) suggestions.push("Add groundnuts for N-fixation");
+  if (!farm.buildings.some(b => b.type === "water_tank")) suggestions.push("Install rainwater tanks");
   
   return {
-    overallScore,
-    waterEfficiency: waterScore,
-    soilHealth: Math.min(100, 50 + bonusScore),
-    biodiversity: diversityScore,
-    carbonFootprint: 100 - (farm.livestock.cows * 2), // Cattle have higher carbon footprint
+    overallScore: Math.min(100, Math.round(diversity * 0.3 + 70 * 0.3 + bonus * 0.4)),
+    waterEfficiency: 75,
+    soilHealth: Math.min(100, 50 + bonus),
+    biodiversity: Math.min(100, diversity),
+    carbonFootprint: Math.max(0, 100 - farm.livestock.cows * 2),
     synergies,
-    suggestions,
+    suggestions: suggestions.slice(0, 4),
   };
 }
 
-// ============================================================================
-// Profit Calculator
-// ============================================================================
-
-function calculateProfit(
+function calculateMockProfit(
   farm: FarmConfig,
   cropResults: CropSuitability[],
-  livestockResults: LivestockAnalysis[],
-  sustainability: SustainabilityMetrics
+  livestockResults: LivestockAnalysis[]
 ): ProfitEstimate {
   const breakdown: ProfitEstimate["breakdownByEnterprise"] = [];
   
-  // Crop profits
   for (const crop of farm.crops) {
-    const suitability = cropResults.find((c) => c.crop === crop.type);
-    if (suitability) {
-      const revenue = suitability.profitPotentialUsd * crop.areaHa;
-      const costs = revenue * 0.45; // ~45% cost ratio
+    const suit = cropResults.find(c => c.crop === crop.type);
+    if (suit) {
+      const revenue = suit.profitPotentialUsd * crop.areaHa;
+      const costs = revenue * 0.45;
       breakdown.push({
         enterprise: crop.type,
         revenue: Math.round(revenue),
@@ -387,29 +355,21 @@ function calculateProfit(
     }
   }
   
-  // Livestock profits
   for (const livestock of livestockResults) {
     if (livestock.count > 0) {
       const revenue = livestock.estimatedRevenueUsd;
-      const feedCost = livestock.feedRequirementKg * 0.3; // $0.30/kg feed
-      const otherCosts = revenue * 0.2;
-      const costs = feedCost + otherCosts;
-      
-      // Apply synergy discounts
-      const feedDiscount = sustainability.synergies.find((s) => s.target === "Livestock feed");
-      const adjustedCosts = feedDiscount ? costs * (1 - feedDiscount.impactPercent / 100 * 0.5) : costs;
-      
+      const costs = livestock.feedRequirementKg * 0.3 + revenue * 0.2;
       breakdown.push({
         enterprise: livestock.type,
         revenue: Math.round(revenue),
-        costs: Math.round(adjustedCosts),
-        profit: Math.round(revenue - adjustedCosts),
+        costs: Math.round(costs),
+        profit: Math.round(revenue - costs),
       });
     }
   }
   
-  const totalRevenue = breakdown.reduce((sum, b) => sum + b.revenue, 0);
-  const totalCosts = breakdown.reduce((sum, b) => sum + b.costs, 0);
+  const totalRevenue = breakdown.reduce((s, b) => s + b.revenue, 0);
+  const totalCosts = breakdown.reduce((s, b) => s + b.costs, 0);
   const netProfit = totalRevenue - totalCosts;
   
   return {
@@ -419,69 +379,50 @@ function calculateProfit(
     breakdownByEnterprise: breakdown,
     scenarios: {
       pessimistic: Math.round(netProfit * 0.6),
-      expected: Math.round(netProfit),
+      expected: netProfit,
       optimistic: Math.round(netProfit * 1.4),
     },
   };
 }
 
-// ============================================================================
-// Resource Requirements Calculator
-// ============================================================================
-
-function calculateResources(
+function calculateMockResources(
   farm: FarmConfig,
   livestockResults: LivestockAnalysis[]
 ): ResourceRequirements {
-  const totalCropArea = farm.crops.reduce((sum, c) => sum + c.areaHa, 0);
-  const irrigatedArea = farm.crops.filter((c) => c.irrigated).reduce((sum, c) => sum + c.areaHa, 0);
-  
-  const livestockWater = livestockResults.reduce((sum, l) => sum + l.waterRequirementL, 0) / 365;
-  const irrigationWater = irrigatedArea * 50; // ~50L/day/ha for drip
-  
-  const livestockFeed = livestockResults.reduce((sum, l) => sum + l.feedRequirementKg, 0) / 365;
+  const irrigatedArea = farm.crops.filter(c => c.irrigated).reduce((s, c) => s + c.areaHa, 0);
+  const livestockWater = livestockResults.reduce((s, l) => s + l.waterRequirementL, 0) / 365;
+  const livestockFeed = livestockResults.reduce((s, l) => s + l.feedRequirementKg, 0) / 365;
   
   return {
-    waterLitersPerDay: Math.round(livestockWater + irrigationWater + 100), // +100 for household
+    waterLitersPerDay: Math.round(livestockWater + irrigatedArea * 50 + 100),
     feedKgPerDay: Math.round(livestockFeed),
-    fertilizerKgPerSeason: Math.round(totalCropArea * 150), // ~150 kg/ha
+    fertilizerKgPerSeason: Math.round(farm.crops.reduce((s, c) => s + c.areaHa, 0) * 150),
     laborHoursPerWeek: Math.round(farm.areaHa * 8 + Object.values(farm.livestock).reduce((a, b) => a + b, 0) * 0.5),
     fuelLitersPerMonth: Math.round(farm.areaHa * 5 + 20),
   };
 }
 
-// ============================================================================
-// Main Simulation Function
-// ============================================================================
-
-export async function runSimulation(farm: FarmConfig): Promise<SimulationResult> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+async function runMockSimulation(farm: FarmConfig): Promise<SimulationResult> {
+  await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
   
   const aez = lookupAEZZone(farm.location.lat, farm.location.lng);
-  const weather = generateWeatherData(aez);
-  const soil = generateSoilData(aez);
+  const weather = generateMockWeather(aez);
+  const soil = generateMockSoil(aez);
   
-  // Calculate crop suitability for all possible crops
-  const allCrops: CropType[] = ["maize", "sorghum", "groundnuts", "wheat", "vegetables", "tobacco", "cotton", "fodder", "potatoes"];
-  const cropSuitability = allCrops.map((crop) => calculateCropSuitability(crop, aez, weather));
+  const allCrops = ["maize", "sorghum", "groundnuts", "wheat", "vegetables", "tobacco", "cotton", "fodder", "potatoes"];
+  const cropSuitability = allCrops.map(c => calculateMockCropSuitability(c, aez, weather))
+    .sort((a, b) => b.suitabilityScore - a.suitabilityScore);
   
-  // Calculate livestock analysis
   const livestockAnalysis: LivestockAnalysis[] = [];
   for (const [type, count] of Object.entries(farm.livestock)) {
     if (count > 0) {
-      livestockAnalysis.push(calculateLivestockAnalysis(type as keyof typeof LIVESTOCK_REVENUE, count));
+      livestockAnalysis.push(calculateMockLivestock(type, count));
     }
   }
   
-  // Calculate sustainability
-  const sustainability = calculateSustainability(farm, cropSuitability, livestockAnalysis);
-  
-  // Calculate profit
-  const profitEstimate = calculateProfit(farm, cropSuitability, livestockAnalysis, sustainability);
-  
-  // Calculate resources
-  const resources = calculateResources(farm, livestockAnalysis);
+  const sustainability = calculateMockSustainability(farm, livestockAnalysis);
+  const profitEstimate = calculateMockProfit(farm, cropSuitability, livestockAnalysis);
+  const resources = calculateMockResources(farm, livestockAnalysis);
   
   return {
     farmId: farm.id,
@@ -490,7 +431,7 @@ export async function runSimulation(farm: FarmConfig): Promise<SimulationResult>
     aezZone: aez,
     weather,
     soil,
-    cropSuitability: cropSuitability.sort((a, b) => b.suitabilityScore - a.suitabilityScore),
+    cropSuitability,
     livestockAnalysis,
     sustainability,
     profitEstimate,
@@ -499,16 +440,35 @@ export async function runSimulation(farm: FarmConfig): Promise<SimulationResult>
 }
 
 // ============================================================================
+// Main Simulation Function
+// ============================================================================
+
+export async function runSimulation(farm: FarmConfig): Promise<SimulationResult> {
+  // Try backend first
+  try {
+    const isAvailable = await apiClient.checkHealth();
+    if (isAvailable) {
+      console.log("Using backend API for simulation");
+      return await apiClient.simulate(farm);
+    }
+  } catch (error) {
+    console.warn("Backend unavailable, using mock simulation");
+  }
+  
+  // Fallback to mock
+  console.log("Using mock simulation");
+  return runMockSimulation(farm);
+}
+
+// ============================================================================
 // Export Farm Plan
 // ============================================================================
 
 export function exportFarmPlan(farm: FarmConfig, result: SimulationResult): string {
-  const exportData = {
+  return JSON.stringify({
     exportedAt: new Date().toISOString(),
     version: "1.0",
     farm,
     simulation: result,
-  };
-  
-  return JSON.stringify(exportData, null, 2);
+  }, null, 2);
 }

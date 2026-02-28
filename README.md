@@ -230,15 +230,56 @@ A modern React frontend with interactive OpenStreetMap integration.
 ### Tech Stack
 Next.js 14 • TypeScript • Tailwind CSS • Leaflet • Zustand • Recharts
 
-### Quick Start (React)
+### Quick Start (React + API)
+
+**Option 1: Full stack (recommended)**
 ```bash
+# Terminal 1: Start FastAPI backend
+./run-api.sh
+# API at http://localhost:8000, docs at http://localhost:8000/docs
+
+# Terminal 2: Start React frontend
 cd web-frontend
 npm install
 npm run dev
 # Open http://localhost:3000
 ```
 
+**Option 2: Frontend only (uses mock data)**
+```bash
+cd web-frontend
+npm install
+npm run dev
+```
+
 See [web-frontend/README.md](web-frontend/README.md) for full documentation.
+
+## FastAPI Backend
+
+The `src/api/` module provides a REST API connecting to the Python simulation engine.
+
+### Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/aez/{lat}/{lng}` | GET | Get AEZ zone for coordinates |
+| `/api/weather/{lat}/{lng}` | GET | Get weather data |
+| `/api/crops/suitability/{lat}/{lng}` | GET | Get crop suitability ranking |
+| `/api/simulate` | POST | Run full farm simulation |
+| `/api/strategic-plan` | POST | Get strategic farm plan |
+| `/api/locations` | GET | List Zimbabwe locations |
+
+### Example
+
+```bash
+# Get AEZ zone for Harare
+curl http://localhost:8000/api/aez/-17.83/31.05
+
+# Run simulation
+curl -X POST http://localhost:8000/api/simulate \
+  -H "Content-Type: application/json" \
+  -d '{"id":"farm1","name":"Test","location":{"lat":-17.83,"lng":31.05},"areaHa":5,"farmType":"mixed","livestock":{"chickens":50,"cows":5},"crops":[{"type":"maize","areaHa":2}],"buildings":[],"zones":[]}'
+```
 
 ## AEZ-Aware Farm Allocator (NEW)
 
