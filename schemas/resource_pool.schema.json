@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agrimesh.local/schemas/resource_pool.schema.json",
+  "title": "Resource Pool",
+  "description": "Shared farm resource pool for agent coordination",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "farm_id": {
+      "type": "string"
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "water": {
+          "$ref": "#/definitions/resource"
+        },
+        "labour": {
+          "$ref": "#/definitions/resource"
+        },
+        "land": {
+          "$ref": "#/definitions/resource"
+        },
+        "feed": {
+          "$ref": "#/definitions/resource"
+        },
+        "budget": {
+          "$ref": "#/definitions/resource"
+        },
+        "electricity": {
+          "$ref": "#/definitions/resource"
+        },
+        "fertilizer": {
+          "$ref": "#/definitions/resource"
+        }
+      },
+      "required": ["water", "labour", "budget"]
+    },
+    "allocations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/allocation"
+      }
+    }
+  },
+  "required": ["timestamp", "farm_id", "resources"],
+  "definitions": {
+    "resource": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "number",
+          "description": "Currently available quantity"
+        },
+        "total": {
+          "type": "number",
+          "description": "Total pool capacity"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of measurement"
+        },
+        "cost_per_unit": {
+          "type": "number",
+          "description": "Cost per unit for budget tracking"
+        },
+        "reserved": {
+          "type": "number",
+          "description": "Quantity reserved for pending operations"
+        }
+      },
+      "required": ["available", "total", "unit"]
+    },
+    "allocation": {
+      "type": "object",
+      "properties": {
+        "allocation_id": {
+          "type": "string"
+        },
+        "agent_id": {
+          "type": "string"
+        },
+        "resource_type": {
+          "type": "string",
+          "enum": ["water", "labour", "land", "feed", "budget", "electricity", "fertilizer"]
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "1=lowest, 10=critical (welfare/biosecurity)"
+        },
+        "start_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "approved", "active", "completed", "rejected", "preempted"]
+        }
+      },
+      "required": ["allocation_id", "agent_id", "resource_type", "quantity", "priority", "status"]
+    }
+  }
+}
