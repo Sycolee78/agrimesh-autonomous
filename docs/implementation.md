@@ -58,7 +58,7 @@
 ---
 
 ## Phase 5 — Agent Coordination & Decision Economy
-**STATUS: In Progress 🔄**
+**STATUS: Completed ✅**
 
 ### Objective
 Enable agents to compete for scarce resources (water, labour, land, feed, budget) with priority-based allocation.
@@ -70,15 +70,38 @@ Enable agents to compete for scarce resources (water, labour, land, feed, budget
 - Decision logger with SQLite persistence (`src/common/decision_logger.py`)
 - Orchestrator integration with bidding (`src/orchestration/orchestrator.py`)
 - Resource visualization dashboard (`frontend/pages/8_💰_Resources.py`)
+- **Budget constraint enforcement** with daily/weekly limits, thresholds, and alerts
+- **Multi-agent conflict resolution** with priority-based preemption and welfare overrides
+- **Real-time resource monitoring WebSocket** (`ws://localhost:8000/ws/resources/{farm_id}`)
+- **Budget burn-down charts** (React component with Recharts)
+- **Decision replay UI** with filtering, search, and export
 
-### In Progress
-- Budget constraint enforcement
-- Multi-agent conflict resolution improvements
+### Key Features (Phase 5)
+| Feature | Description |
+|---------|-------------|
+| Budget Constraints | Daily/weekly limits with warning (75%), critical (90%), hard-stop thresholds |
+| Welfare Override | WELFARE/CRITICAL priority requests can exceed soft limits |
+| Real-time WebSocket | Live resource status, alerts pushed to connected clients |
+| Burn-Down Tracking | Per-resource consumption history with projected depletion |
+| Decision Replay | Filter by agent/type, playback controls, JSON export |
 
-### Next
-- Real-time resource monitoring WebSocket
-- Budget burn-down charts
-- Decision replay/simulation UI
+### API Endpoints (Phase 5)
+- `GET /api/resources/{farm_id}/status` — Current resource pool status
+- `GET /api/resources/{farm_id}/budget` — Budget constraint summary
+- `GET /api/resources/{farm_id}/burn-down` — Consumption history
+- `POST /api/resources/{farm_id}/configure` — Set budget constraints
+- `POST /api/resources/{farm_id}/alerts/{id}/acknowledge` — Acknowledge alert
+- `WS /ws/resources/{farm_id}` — Real-time WebSocket stream
+- `GET /api/decisions/{farm_id}/history` — Decision history
+- `GET /api/decisions/{farm_id}/summary` — Daily decision summary
+- `GET /api/decisions/{farm_id}/export` — Export for ML training
+
+### React Components (Phase 5)
+- `BurnDownChart` — Single resource consumption chart
+- `BurnDownOverview` — Multi-resource burn-down dashboard
+- `ResourceMonitor` — Real-time WebSocket-connected monitor
+- `DecisionReplay` — Decision history with playback controls
+- `/resources` page — Unified resource economy dashboard
 
 ---
 
