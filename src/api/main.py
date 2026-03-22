@@ -13,9 +13,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+import asyncio
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -24,6 +25,13 @@ from src.allocators.aez_lookup import AEZLookupAgent
 from src.strategic_planner import StrategicFarmPlanner
 from src.sim.yield_model import CROP_PROFILES, calculate_yield_factor
 from src.data.weather_client import OpenMeteoClient, ZIMBABWE_LOCATIONS
+from src.common.models import FarmState, PlotState, WaterSystemState, WeatherState, KPIState
+from src.orchestration import FarmManagementOrchestrator, AgentContext
+from src.resources.pool import ResourcePool, ResourceType, AllocationPriority
+from src.resources.bidding import BiddingEngine, BidStatus
+from src.resources.budget import BudgetManager, BudgetPeriod, BudgetStatus
+from src.resources.logger import DecisionLogger, DecisionType, DecisionOutcome
+import random
 
 # ============================================================================
 # FastAPI App
@@ -193,6 +201,60 @@ class SimulationResult(BaseModel):
     sustainability: SustainabilityMetrics
     profitEstimate: ProfitEstimate
     resources: ResourceRequirements
+
+
+# ============================================================================
+# Multi-Day Orchestrator Simulation Models
+# ============================================================================
+
+class OrchestratorConfig(BaseModel):
+    """Configuration for multi-day orchestrator simulation."""
+    days: int = Field(30, ge=1, le=365, description="Number of days to simulate")
+    mode: str = Field("dry_season", description="Season mode: dry_season or wet_season")
+    waterBudget: float = Field(1200, ge=0, description="Daily water budget in liters")
+    baseTemp: float = Field(28, description="Base temperature in Celsius")
+    baseRain: float = Field(2.0, ge=0, description="Base daily rainfall in mm")
+    variability: float = Field(2.0, ge=0, description="Weather variability factor")
+
+
+class DayWeather(BaseModel):
+    """Weather for a single day."""
+    temp: float
+    rain: float
+    humidity: float
+
+
+class DayResult(BaseModel):
+    """Results for a single simulation day."""
+    day: int
+    waterApplied: float
+    tankLevel: float
+    stressEvents: int
+    yieldProxy: float
+    wue: float  # Water use efficiency
+    weather: DayWeather
+    plotMoisture: Dict[str, float]
+    actions: List[Dict[str, Any]] = []
+    alerts: List[str] = []
+
+
+class SimulationAlert(BaseModel):
+    """Alert generated during simulation."""
+    day: int
+    message: str
+    severity: str  # "info", "warning", "critical"
+
+
+class OrchestratorSimulationResult(BaseModel):
+    """Complete multi-day orchestrator simulation result."""
+    farmId: str
+    config: OrchestratorConfig
+    startedAt: str
+    completedAt: str
+    totalDays: int
+    results: List[DayResult]
+    alerts: List[SimulationAlert]
+    summary: Dict[str, Any]
 
 
 # ============================================================================
@@ -736,6 +798,264 @@ async def get_locations():
         }
         for name, data in ZIMBABWE_LOCATIONS.items()
     }
+
+
+# ============================================================================
+# Multi-Day Orchestrator Simulation
+# ============================================================================
+
+@app.post("/api/orchestrator/simulate", response_model=OrchestratorSimulationResult)
+async def run_orchestrator_simulation(farm: FarmConfig, config: OrchestratorConfig):
+    """
+    Run multi-day orchestrator simulation.
+    
+    This simulates the farm over multiple days, running the orchestrator
+    each day to make irrigation decisions, track yields, and detect issues.
+    """
+    started_at = datetime.now()
+    
+    # Convert FarmConfig to internal FarmState
+    aez = lookup_aez_zone(farm.location.lat, farm.location.lng)
+    
+    # Create plots from crops
+    plots = []
+    for i, crop in enumerate(farm.crops):
+        plots.append(PlotState(
+            plot_id=f"P{i+1}",
+            area_m2=crop.areaHa * 10000,  # Convert ha to m²
+            crop_type=crop.type,
+            crop_stage="vegetative",
+            soil_moisture=0.40,  # Starting moisture
+            aez_zone=aez["id"],
+            day_of_season=1,
+            cumulative_stress_days=0,
+        ))
+    
+    # If no crops defined, create a default plot
+    if not plots:
+        plots.append(PlotState(
+            plot_id="P1",
+            area_m2=farm.areaHa * 10000 * 0.5,
+            crop_type="maize",
+            crop_stage="vegetative",
+            soil_moisture=0.40,
+            aez_zone=aez["id"],
+            day_of_season=1,
+            cumulative_stress_days=0,
+        ))
+    
+    # Initial tank level based on water budget
+    initial_tank = config.waterBudget * 10  # 10 days reserve
+    
+    # Initialize orchestrator
+    orchestrator = FarmManagementOrchestrator()
+    
+    # Simulation state
+    results: List[DayResult] = []
+    alerts: List[SimulationAlert] = []
+    tank_level = initial_tank
+    cumulative_yield = 0.0
+    total_water_used = 0.0
+    total_stress = 0
+    
+    # Run simulation for each day
+    for day in range(1, config.days + 1):
+        # Generate weather for this day
+        temp_variation = (random.random() - 0.5) * config.variability * 2
+        rain_variation = (random.random() - 0.5) * config.variability * 2
+        
+        day_temp = config.baseTemp + temp_variation
+        day_rain = max(0, config.baseRain + rain_variation)
+        day_humidity = 55 + (random.random() - 0.5) * 20
+        
+        # Wet season has more rain
+        if config.mode == "wet_season":
+            day_rain *= 2.5
+            day_humidity += 15
+        
+        weather = WeatherState(
+            temperature_c=day_temp,
+            humidity_pct=day_humidity,
+            rainfall_mm=day_rain,
+        )
+        
+        # Update plot moisture from rainfall
+        for plot in plots:
+            # Rain adds moisture, evaporation removes it
+            rain_contribution = day_rain / 50  # ~2mm rain = 0.04 moisture
+            evaporation = (day_temp - 20) / 200 + 0.02  # Higher temp = more evap
+            plot.soil_moisture = max(0.1, min(0.7, plot.soil_moisture + rain_contribution - evaporation))
+            plot.day_of_season = day
+        
+        # Refill tank from rain collection (simple model)
+        rain_collection = day_rain * farm.areaHa * 100  # Simplified collection
+        tank_level = min(initial_tank * 1.2, tank_level + rain_collection)
+        
+        # Create context for orchestrator
+        farm_state = FarmState(
+            timestamp=datetime(2026, 1, 1 + day, 6, 0, 0),
+            plots=plots,
+            water_system=WaterSystemState(
+                tank_level_liters=tank_level,
+                daily_supply_limit_liters=config.waterBudget,
+                pump_capacity_lpm=70,
+            ),
+            weather=weather,
+            kpis=KPIState(
+                water_use_efficiency=total_water_used / max(1, cumulative_yield) if cumulative_yield > 0 else 0,
+                crop_stress_events=total_stress,
+                yield_estimate_tons_per_ha=cumulative_yield / max(1, len(plots)),
+            ),
+        )
+        
+        ctx = AgentContext(
+            cycle_id=f"day-{day:03d}",
+            mode=config.mode,
+            farm_state=farm_state,
+            budgets={"water_liters_day": config.waterBudget},
+        )
+        
+        # Run orchestrator cycle
+        try:
+            cycle_result = orchestrator.run_cycle(ctx, out_file=f"/tmp/agrimesh_sim/day_{day:03d}.json")
+        except Exception as e:
+            # If orchestrator fails, use simple fallback
+            cycle_result = {"action_queue": {}, "alerts": [str(e)], "observations": {}}
+        
+        # Process irrigation actions
+        water_applied = 0.0
+        day_actions = []
+        
+        action_queue = cycle_result.get("action_queue", {})
+        for priority, actions in action_queue.items():
+            for action in actions:
+                if action.get("action_type") == "irrigate":
+                    liters = float(action.get("params", {}).get("liters", 0))
+                    plot_id = action.get("plot_id", "")
+                    
+                    # Apply irrigation
+                    if tank_level >= liters:
+                        water_applied += liters
+                        tank_level -= liters
+                        
+                        # Update plot moisture
+                        for plot in plots:
+                            if plot.plot_id == plot_id:
+                                plot.soil_moisture = min(0.65, plot.soil_moisture + liters / (plot.area_m2 * 10))
+                        
+                        day_actions.append({
+                            "type": "irrigate",
+                            "plot": plot_id,
+                            "liters": liters,
+                        })
+        
+        total_water_used += water_applied
+        
+        # Check for stress events
+        day_stress = 0
+        for plot in plots:
+            # Stress if moisture too low
+            critical_threshold = 0.25
+            if plot.soil_moisture < critical_threshold:
+                day_stress += 1
+                plot.cumulative_stress_days += 1
+        
+        total_stress += day_stress
+        
+        # Calculate yield proxy (simplified model)
+        # Yield increases daily based on moisture and stage
+        base_growth = 0.02  # Base daily yield increment
+        for plot in plots:
+            moisture_factor = min(1.0, plot.soil_moisture / 0.4)  # Optimal at 0.4
+            stress_penalty = max(0.5, 1 - plot.cumulative_stress_days * 0.02)
+            stage_factor = min(1.0, plot.day_of_season / 60)  # Peak at 60 days
+            
+            daily_yield = base_growth * moisture_factor * stress_penalty * stage_factor
+            cumulative_yield += daily_yield
+        
+        # Water use efficiency
+        wue = cumulative_yield / max(1, total_water_used / 1000)  # kg/m³
+        
+        # Collect plot moisture
+        plot_moisture = {plot.plot_id: round(plot.soil_moisture, 3) for plot in plots}
+        
+        # Generate alerts
+        cycle_alerts = cycle_result.get("alerts", [])
+        for alert_msg in cycle_alerts:
+            alerts.append(SimulationAlert(
+                day=day,
+                message=alert_msg,
+                severity="warning",
+            ))
+        
+        # Temperature alert
+        if day_temp > 35:
+            alerts.append(SimulationAlert(
+                day=day,
+                message=f"Heat stress: {day_temp:.1f}°C",
+                severity="warning",
+            ))
+        
+        # Low moisture alert
+        for plot in plots:
+            if plot.soil_moisture < 0.2:
+                alerts.append(SimulationAlert(
+                    day=day,
+                    message=f"Critical moisture in {plot.plot_id}: {plot.soil_moisture:.0%}",
+                    severity="critical",
+                ))
+        
+        # Low tank alert
+        if tank_level < config.waterBudget * 2:
+            alerts.append(SimulationAlert(
+                day=day,
+                message=f"Low water reserves: {tank_level:.0f}L remaining",
+                severity="warning",
+            ))
+        
+        # Record day result
+        results.append(DayResult(
+            day=day,
+            waterApplied=round(water_applied, 1),
+            tankLevel=round(tank_level, 1),
+            stressEvents=day_stress,
+            yieldProxy=round(cumulative_yield, 3),
+            wue=round(wue, 3),
+            weather=DayWeather(
+                temp=round(day_temp, 1),
+                rain=round(day_rain, 1),
+                humidity=round(day_humidity, 1),
+            ),
+            plotMoisture=plot_moisture,
+            actions=day_actions,
+            alerts=[a.message for a in alerts if a.day == day],
+        ))
+    
+    completed_at = datetime.now()
+    
+    # Summary statistics
+    summary = {
+        "totalWaterUsed": round(total_water_used, 1),
+        "totalStressEvents": total_stress,
+        "finalYield": round(cumulative_yield, 3),
+        "avgWUE": round(total_water_used / max(1, cumulative_yield) if cumulative_yield > 0 else 0, 2),
+        "finalTankLevel": round(tank_level, 1),
+        "avgDailyWater": round(total_water_used / config.days, 1),
+        "rainyDays": sum(1 for r in results if r.weather.rain > 1),
+        "hotDays": sum(1 for r in results if r.weather.temp > 32),
+        "criticalAlerts": sum(1 for a in alerts if a.severity == "critical"),
+    }
+    
+    return OrchestratorSimulationResult(
+        farmId=farm.id,
+        config=config,
+        startedAt=started_at.isoformat(),
+        completedAt=completed_at.isoformat(),
+        totalDays=config.days,
+        results=results,
+        alerts=alerts,
+        summary=summary,
+    )
 
 
 # ============================================================================
