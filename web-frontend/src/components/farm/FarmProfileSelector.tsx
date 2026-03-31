@@ -5,10 +5,11 @@ import { useFarmProfilesStore } from "@/store/farmProfilesStore";
 
 interface FarmProfileSelectorProps {
   onNewFarm: () => void;
+  onManageProfiles: () => void;
 }
 
-export function FarmProfileSelector({ onNewFarm }: FarmProfileSelectorProps) {
-  const { profiles, activeProfileId, loadProfileIntoSession, setActiveProfile, hydrateFromBackend } =
+export function FarmProfileSelector({ onNewFarm, onManageProfiles }: FarmProfileSelectorProps) {
+  const { profiles, activeProfileId, loadProfileIntoSession, setActiveProfile, hydrateFromBackend, backendSync } =
     useFarmProfilesStore();
 
   React.useEffect(() => {
@@ -24,6 +25,19 @@ export function FarmProfileSelector({ onNewFarm }: FarmProfileSelectorProps) {
     setActiveProfile(profileId);
     loadProfileIntoSession(profileId);
   };
+
+  const syncColor =
+    backendSync === "idle"
+      ? "text-emerald-600 border-emerald-300"
+      : backendSync === "loading"
+      ? "text-amber-600 border-amber-300"
+      : "text-red-600 border-red-300";
+  const syncLabel =
+    backendSync === "idle"
+      ? "Backend OK"
+      : backendSync === "loading"
+      ? "Syncing..."
+      : "Offline";
 
   return (
     <div className="flex items-center gap-2">
@@ -46,6 +60,18 @@ export function FarmProfileSelector({ onNewFarm }: FarmProfileSelectorProps) {
       >
         New farm
       </button>
+      <button
+        type="button"
+        className="text-xs px-2 py-1 rounded border border-border hover:bg-muted"
+        onClick={onManageProfiles}
+      >
+        Manage
+      </button>
+      <span
+        className={`text-[11px] px-2 py-0.5 rounded-full border ${syncColor} hidden md:inline-flex`}
+      >
+        {syncLabel}
+      </span>
     </div>
   );
 }

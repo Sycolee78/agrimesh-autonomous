@@ -6,6 +6,7 @@ import FarmConfigPanel from "@/components/farm/FarmConfigPanel";
 import ResultsDashboard from "@/components/dashboard/ResultsDashboard";
 import { FarmProfileSelector } from "@/components/farm/FarmProfileSelector";
 import { FarmOnboardingWizard } from "@/components/farm/FarmOnboardingWizard";
+import { FarmProfilesManager } from "@/components/farm/FarmProfilesManager";
 import {
   MapPin,
   Settings,
@@ -76,6 +77,7 @@ export default function HomePage() {
     simulationResult,
   } = useFarmStore();
   const [onboardingOpen, setOnboardingOpen] = React.useState(false);
+  const [profilesManagerOpen, setProfilesManagerOpen] = React.useState(false);
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
@@ -101,7 +103,10 @@ export default function HomePage() {
 
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-3">
-            <FarmProfileSelector onNewFarm={() => setOnboardingOpen(true)} />
+            <FarmProfileSelector
+              onNewFarm={() => setOnboardingOpen(true)}
+              onManageProfiles={() => setProfilesManagerOpen(true)}
+            />
             {farmConfig && (
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <MapPin size={16} />
@@ -126,6 +131,12 @@ export default function HomePage() {
       <FarmOnboardingWizard
         open={onboardingOpen}
         onClose={() => setOnboardingOpen(false)}
+      />
+
+      {/* Farm Profiles Manager */}
+      <FarmProfilesManager
+        open={profilesManagerOpen}
+        onClose={() => setProfilesManagerOpen(false)}
       />
 
       {/* Main Content */}

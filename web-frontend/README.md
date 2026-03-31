@@ -156,6 +156,15 @@ You can now manage multiple farms per browser using profiles.
 6. If the backend is running (`./run-api.sh` on port 8000), profiles are also
    synced to the server via `/api/farms`, so you can reopen them from any
    browser that points to the same backend.
+7. Click **Manage** next to the dropdown to:
+   - Load a profile explicitly ("Load" button)
+   - Rename a profile ("Rename" → edit name/description → "Save")
+   - Delete a profile ("Delete" with confirmation)
+
+A small status pill next to **Manage** shows backend sync status:
+- **Backend OK** – connected to FastAPI, profiles persisted server-side
+- **Syncing...** – currently fetching from the backend
+- **Offline** – backend not reachable, profiles are local-only
 
 ## Simulation Logic
 
