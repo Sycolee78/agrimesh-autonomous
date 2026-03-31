@@ -138,6 +138,25 @@ Download your complete farm plan as JSON for:
 - Sharing with advisors
 - Integration with other systems
 
+### 6. Farm Profiles & Onboarding (NEW)
+
+You can now manage multiple farms per browser using profiles.
+
+1. Open the app and look at the top-right header.
+2. Use the **Farm** dropdown:
+   - Select an existing farm profile to load it.
+   - Click **New farm** to start the onboarding wizard.
+3. In the onboarding wizard:
+   - Step 1: Click on the map to choose a location, set total area (ha), then Continue.
+   - Step 2: Enter farm name and choose farm type (crops / livestock / mixed).
+   - Step 3: Read the guidance; detailed configuration happens in the Configure tab.
+   - Step 4: Optionally add a description to recognize this farm later.
+4. After finishing, the farm is saved as a profile and loaded into the main UI.
+5. Profiles are stored locally in your browser (Zustand + localStorage).
+6. If the backend is running (`./run-api.sh` on port 8000), profiles are also
+   synced to the server via `/api/farms`, so you can reopen them from any
+   browser that points to the same backend.
+
 ## Simulation Logic
 
 ### AEZ Zone Mapping

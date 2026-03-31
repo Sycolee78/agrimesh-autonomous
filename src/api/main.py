@@ -18,6 +18,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import asyncio
 
+from .farm_profiles_storage import (
+    list_profiles,
+    get_profile,
+    create_profile as storage_create_profile,
+    update_profile as storage_update_profile,
+    delete_profile as storage_delete_profile,
+)
+
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
@@ -201,6 +209,22 @@ class SimulationResult(BaseModel):
     sustainability: SustainabilityMetrics
     profitEstimate: ProfitEstimate
     resources: ResourceRequirements
+
+
+# ============================================================================
+# Farm profile models (API layer)
+# ============================================================================
+
+class FarmProfileBase(BaseModel):
+    name: str
+    description: str | None = ""
+    farm: FarmConfig
+
+
+class FarmProfileResponse(FarmProfileBase):
+    profileId: str
+    createdAt: str
+    updatedAt: str
 
 
 # ============================================================================
@@ -666,6 +690,90 @@ def calculate_resources(
 # ============================================================================
 # API Endpoints
 # ============================================================================
+
+# Farm profile endpoints
+
+@app.get("/api/farms", response_model=List[FarmProfileResponse])
+async def api_list_farms():
+    """List all stored farm profiles.
+
+    NOTE: This is a simple, unauthenticated, single-tenant store intended for
+    local simulation. In a real deployment, replace with a proper DB + auth.
+    """
+    items = []
+    for p in list_profiles():
+        items.append(
+            FarmProfileResponse(
+                profileId=p.profile_id,
+                name=p.name,
+                description=p.description,
+                farm=p.farm_config,
+                createdAt=p.created_at,
+                updatedAt=p.updated_at,
+            )
+        )
+    return items
+
+
+@app.get("/api/farms/{profile_id}", response_model=FarmProfileResponse)
+async def api_get_farm(profile_id: str):
+    profile = get_profile(profile_id)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Farm profile not found")
+    return FarmProfileResponse(
+        profileId=profile.profile_id,
+        name=profile.name,
+        description=profile.description,
+        farm=profile.farm_config,
+        createdAt=profile.created_at,
+        updatedAt=profile.updated_at,
+    )
+
+
+@app.post("/api/farms", response_model=FarmProfileResponse)
+async def api_create_farm(payload: FarmProfileBase):
+    profile = storage_create_profile(
+        name=payload.name,
+        description=payload.description or "",
+        farm_config=payload.farm.dict(),
+    )
+    return FarmProfileResponse(
+        profileId=profile.profile_id,
+        name=profile.name,
+        description=profile.description,
+        farm=profile.farm_config,
+        createdAt=profile.created_at,
+        updatedAt=profile.updated_at,
+    )
+
+
+@app.put("/api/farms/{profile_id}", response_model=FarmProfileResponse)
+async def api_update_farm(profile_id: str, payload: FarmProfileBase):
+    profile = storage_update_profile(
+        profile_id=profile_id,
+        name=payload.name,
+        description=payload.description or "",
+        farm_config=payload.farm.dict(),
+    )
+    if not profile:
+        raise HTTPException(status_code=404, detail="Farm profile not found")
+    return FarmProfileResponse(
+        profileId=profile.profile_id,
+        name=profile.name,
+        description=profile.description,
+        farm=profile.farm_config,
+        createdAt=profile.created_at,
+        updatedAt=profile.updated_at,
+    )
+
+
+@app.delete("/api/farms/{profile_id}")
+async def api_delete_farm(profile_id: str):
+    ok = storage_delete_profile(profile_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Farm profile not found")
+    return {"status": "deleted", "profileId": profile_id}
+
 
 @app.get("/")
 async def root():

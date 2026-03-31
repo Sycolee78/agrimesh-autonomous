@@ -12,6 +12,7 @@ import type {
   AEZZone,
   WeatherData,
   CropSuitability,
+  FarmProfile,
 } from "@/types/farm";
 
 // ============================================================================
@@ -88,6 +89,35 @@ class ApiClient {
 
   async getLocations(): Promise<Record<string, { lat: number; lng: number; aez: string }>> {
     return this.fetch("/api/locations");
+  }
+
+  async listFarmProfiles(): Promise<FarmProfile[]> {
+    return this.fetch("/api/farms");
+  }
+
+  async saveFarmProfile(profile: FarmProfile): Promise<FarmProfile> {
+    if (profile.profileId) {
+      return this.fetch(`/api/farms/${profile.profileId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          name: profile.profileName,
+          description: profile.description ?? "",
+          farm: profile.farmConfig,
+        }),
+      });
+    }
+    return this.fetch("/api/farms", {
+      method: "POST",
+      body: JSON.stringify({
+        name: profile.profileName,
+        description: profile.description ?? "",
+        farm: profile.farmConfig,
+      }),
+    });
+  }
+
+  async deleteFarmProfile(profileId: string): Promise<void> {
+    await this.fetch(`/api/farms/${profileId}`, { method: "DELETE" });
   }
 
   isBackendAvailable(): boolean {

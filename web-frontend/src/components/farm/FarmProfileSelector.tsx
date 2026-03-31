@@ -8,8 +8,12 @@ interface FarmProfileSelectorProps {
 }
 
 export function FarmProfileSelector({ onNewFarm }: FarmProfileSelectorProps) {
-  const { profiles, activeProfileId, loadProfileIntoSession, setActiveProfile } =
+  const { profiles, activeProfileId, loadProfileIntoSession, setActiveProfile, hydrateFromBackend } =
     useFarmProfilesStore();
+
+  React.useEffect(() => {
+    hydrateFromBackend();
+  }, [hydrateFromBackend]);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const profileId = event.target.value || null;

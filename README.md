@@ -252,6 +252,20 @@ npm install
 npm run dev
 ```
 
+**Using Farm Profiles & Onboarding (frontend)**
+
+Once the React frontend is running:
+1. Open http://localhost:3000.
+2. In the header (top-right), use the **Farm** dropdown:
+   - Select an existing farm profile to load it.
+   - Click **New farm** to launch the onboarding wizard.
+3. Follow the 4-step wizard (location → area → basic config → description).
+4. The farm profile is saved in your browser and can be reselected later.
+
+When the FastAPI backend is running (see below), farm profiles are also
+persisted server-side in `data/farm_profiles.json` and will be available
+across browsers/machines as long as they point to the same backend.
+
 See [web-frontend/README.md](web-frontend/README.md) for full documentation.
 
 ## FastAPI Backend
@@ -268,6 +282,11 @@ The `src/api/` module provides a REST API connecting to the Python simulation en
 | `/api/simulate` | POST | Run full farm simulation |
 | `/api/strategic-plan` | POST | Get strategic farm plan |
 | `/api/locations` | GET | List Zimbabwe locations |
+| `/api/farms` | GET | List all farm profiles (server-side) |
+| `/api/farms/{id}` | GET | Get a specific farm profile |
+| `/api/farms` | POST | Create a farm profile (name + description + config) |
+| `/api/farms/{id}` | PUT | Update a farm profile |
+| `/api/farms/{id}` | DELETE | Delete a farm profile |
 
 ### Example
 
