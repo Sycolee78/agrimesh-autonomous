@@ -88,6 +88,19 @@ export interface FarmConfig {
 }
 
 // ============================================================================
+// Farm Profiles
+// ============================================================================
+
+export interface FarmProfile {
+  profileId: string;
+  profileName: string;
+  description?: string;
+  farmConfig: FarmConfig;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ============================================================================
 // Simulation & Results
 // ============================================================================
 

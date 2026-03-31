@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { useFarmStore } from "@/store/farmStore";
 import FarmConfigPanel from "@/components/farm/FarmConfigPanel";
 import ResultsDashboard from "@/components/dashboard/ResultsDashboard";
+import { FarmProfileSelector } from "@/components/farm/FarmProfileSelector";
+import { FarmOnboardingWizard } from "@/components/farm/FarmOnboardingWizard";
 import {
   MapPin,
   Settings,
@@ -73,6 +75,7 @@ export default function HomePage() {
     farmConfig,
     simulationResult,
   } = useFarmStore();
+  const [onboardingOpen, setOnboardingOpen] = React.useState(false);
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
@@ -97,14 +100,17 @@ export default function HomePage() {
         </div>
 
         <div className="flex items-center gap-4">
-          {farmConfig && (
-            <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
-              <MapPin size={16} />
-              <span>
-                {farmConfig.location.lat.toFixed(4)}, {farmConfig.location.lng.toFixed(4)}
-              </span>
-            </div>
-          )}
+          <div className="hidden md:flex items-center gap-3">
+            <FarmProfileSelector onNewFarm={() => setOnboardingOpen(true)} />
+            {farmConfig && (
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <MapPin size={16} />
+                <span>
+                  {farmConfig.location.lat.toFixed(4)}, {farmConfig.location.lng.toFixed(4)}
+                </span>
+              </div>
+            )}
+          </div>
           <a
             href="https://github.com/Sycolee78/agrimesh-autonomous"
             target="_blank"
@@ -115,6 +121,12 @@ export default function HomePage() {
           </a>
         </div>
       </header>
+
+      {/* Onboarding Wizard */}
+      <FarmOnboardingWizard
+        open={onboardingOpen}
+        onClose={() => setOnboardingOpen(false)}
+      />
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
