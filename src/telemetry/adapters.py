@@ -29,6 +29,7 @@ def transitions_from_sim_step(
     farm_id: str = "sim-farm",
     timestamp: Optional[datetime] = None,
     context: Optional[Dict[str, Any]] = None,
+    plot_meta: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> List[Transition]:
     """Convert one simulator ``step()`` into per-plot crop irrigation transitions.
 
@@ -37,9 +38,16 @@ def transitions_from_sim_step(
     result as ``actual_changes`` carrying ``soil_moisture_before`` /
     ``soil_moisture_after`` per plot. We emit one transition per plot so each
     plot's irrigation decision is independently learnable.
+
+    ``plot_meta`` (optional) carries per-plot descriptors known to the caller at
+    decision time — ``crop_type``, ``target_moisture``, ``critical_threshold``,
+    ``day_of_season`` — merged into each transition's context so the reward layer
+    can label it without re-deriving crop models. Makes transitions
+    self-describing and reproducible.
     """
     ts = timestamp or datetime.now()
     ctx = dict(context or {})
+    meta = plot_meta or {}
 
     plan = decision_log.action_plan.get("irrigation_by_plot_liters", {})
     changes = outcome_log.actual_changes or {}
@@ -54,7 +62,8 @@ def transitions_from_sim_step(
         _build_crop_transition(
             episode_id, tick, ts, farm_id, decision_log, plot_id,
             float(plan.get(plot_id, 0.0)),
-            before.get(plot_id), after.get(plot_id), changes, kpi_delta, ctx,
+            before.get(plot_id), after.get(plot_id), changes, kpi_delta,
+            {**ctx, **meta.get(plot_id, {})},
         )
         for plot_id in sorted(plot_ids)
     ]
